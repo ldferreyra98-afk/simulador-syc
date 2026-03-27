@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S&C Inversiones</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bl:#f1f1f1;--gc:#e5e5e5;--gt:#575756;--vd:#93D500;--az:#1A3F47;--rj:#e66565;--r:4px;--rmd:8px;}
+body{font-family:'Inter',sans-serif;font-weight:300;background:var(--bl);color:var(--az);font-size:14px;line-height:1.6;}
+.topbar{background:var(--az);padding:11px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.tl{display:flex;align-items:center;gap:13px;}
+.lsep{width:2px;height:32px;background:var(--vd);}
+.ln{color:#fff;font-family:'Montserrat',sans-serif;font-size:19px;font-weight:700;}
+.ls{color:rgba(255,255,255,.5);font-size:11px;}
+.tr2{display:flex;align-items:center;gap:10px;}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--vd);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ltxt{font-size:11px;color:rgba(255,255,255,.5);}
+.rb{background:rgba(147,213,0,.13);border:1px solid rgba(147,213,0,.25);color:var(--vd);padding:5px 11px;border-radius:var(--r);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;cursor:pointer;text-transform:uppercase;}
+.rb:hover{background:rgba(147,213,0,.22);}
+.page{max-width:1200px;margin:0 auto;padding:20px 18px 52px;}
+.ph{text-align:center;margin-bottom:18px;}
+.tw{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;}
+.thl{background:var(--vd);color:var(--az);font-family:'Montserrat',sans-serif;font-size:23px;font-weight:700;padding:2px 10px;}
+.tmn{font-family:'Montserrat',sans-serif;font-size:23px;font-weight:700;color:var(--az);}
+.tdot{color:var(--vd);}
+.psub{font-size:12px;color:var(--gt);margin-top:4px;}
+.sec{margin-bottom:16px;}
+.sl{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--az);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.sl .ar{color:var(--vd);}
+.sl::after{content:'';flex:1;height:1px;background:var(--gc);}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+.card{background:var(--gc);border-radius:var(--rmd);padding:16px;}
+.ct{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:var(--az);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.ct .dot{width:7px;height:7px;background:var(--vd);border-radius:1px;flex-shrink:0;}
+.fg{margin-bottom:10px;}
+.fg:last-child{margin-bottom:0;}
+label{display:block;font-size:10px;font-weight:700;color:var(--gt);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+input[type=number],select{width:100%;background:#fff;border:1px solid #d2d2d2;border-radius:var(--r);padding:7px 11px;color:var(--az);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .15s;}
+input[type=number]:focus,select:focus{border-color:var(--vd);}
+.rel{position:relative;}
+.rel .pfx{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--gt);font-size:13px;pointer-events:none;}
+.rel .sfx{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--gt);font-size:12px;pointer-events:none;}
+.rel input{padding-left:20px;}
+.rel input.sf{padding-right:24px;}
+.bsw{display:flex;align-items:center;border:1px solid #d2d2d2;border-radius:var(--r);background:#fff;overflow:hidden;}
+.bsw select{border:none;flex:1;padding:8px 11px;font-size:13px;background:transparent;cursor:pointer;}
+.bsw select:focus{outline:none;}
+.btp{display:none;align-items:center;gap:8px;margin-top:7px;padding:8px 11px;background:#fff;border-radius:var(--r);border-left:3px solid var(--vd);font-size:12px;}
+.btp.show{display:flex;}
+.btp-n{font-weight:700;font-family:'Montserrat',sans-serif;font-size:12px;}
+.btp-sub{font-size:10px;color:var(--gt);font-weight:300;margin-top:1px;}
+.btp-tna{font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:var(--vd);margin-left:auto;}
+.com-pill{background:#fff;border-radius:var(--r);border-left:3px solid var(--vd);padding:8px 11px;font-size:11px;color:var(--az);line-height:1.8;margin-top:8px;}
+.api-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--az);border-radius:var(--rmd);padding:8px 13px;margin-bottom:13px;font-size:11px;color:rgba(255,255,255,.55);}
+.api-bar strong{color:#fff;}
+.ok{color:var(--vd);font-weight:600;}
+.war{color:#ffde59;font-weight:600;}
+.mu2{color:rgba(255,255,255,.35);}
+.nota{background:var(--az);border-radius:var(--rmd);padding:10px 15px;margin-bottom:13px;font-size:11px;color:rgba(255,255,255,.62);line-height:1.55;}
+.nota strong{color:var(--vd);}
+.al{border-left:3px solid var(--vd);background:rgba(147,213,0,.07);border-radius:0 var(--rmd) var(--rmd) 0;padding:9px 13px;font-size:12px;color:var(--az);margin-bottom:13px;}
+.al.neu{border-color:var(--gt);background:var(--gc);color:var(--gt);}
+.al.pfw{border-color:#4472C4;background:rgba(68,114,196,.07);}
+.mc{background:var(--az);border-radius:var(--rmd);padding:13px;color:#fff;position:relative;overflow:hidden;}
+.mc.best{background:var(--vd);}
+.mc.pfmc{background:rgba(26,63,71,.72);}
+.mc.best .mcl,.mc.best .mcs,.mc.best .mcv{color:var(--az);}
+.mcl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.48);margin-bottom:4px;}
+.mcv{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:#fff;line-height:1;margin-bottom:3px;}
+.mcs{font-size:10px;color:rgba(255,255,255,.38);}
+.mct{position:absolute;top:5px;right:5px;font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;text-transform:uppercase;}
+.mc.best .mct{background:var(--az);color:var(--vd);}
+.mkt-wrap{background:#fff;border:1px solid var(--gc);border-radius:var(--rmd);overflow:hidden;margin-bottom:16px;}
+.mkt-t{width:100%;border-collapse:collapse;}
+.mkt-t thead th{background:var(--az);color:#fff;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:9px 11px;text-align:left;white-space:nowrap;cursor:pointer;user-select:none;}
+.mkt-t thead th.r{text-align:right;}
+.mkt-t thead th.c{text-align:center;}
+.mkt-t thead th:hover{background:rgba(255,255,255,.08);}
+.sort-ic{font-size:9px;opacity:.4;margin-left:3px;}
+.mkt-t tbody td{padding:8px 11px;font-size:12px;border-bottom:1px solid var(--gc);vertical-align:middle;}
+.mkt-t tbody tr:last-child td{border-bottom:none;}
+.mkt-t tbody tr:hover td{background:rgba(147,213,0,.04);}
+.mkt-t td.r{text-align:right;}
+.mkt-t td.c{text-align:center;}
+.tag{display:inline-block;padding:2px 7px;border-radius:2px;font-size:10px;font-weight:700;text-transform:uppercase;}
+.tL{background:rgba(26,63,71,.1);color:var(--az);}
+.tB{background:rgba(68,114,196,.14);color:#2a4a8a;}
+.tBT{background:rgba(255,222,89,.38);color:#7a6200;}
+.tBN{background:rgba(147,213,0,.18);color:#3a5500;}
+.tPF{background:var(--gc);color:var(--gt);}
+.vup{color:#3a5500;font-weight:600;}
+.vdn{color:#8b2020;font-weight:600;}
+.mono{font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;}
+.vd-t{color:#3a5500;font-weight:600;}
+.rj-t{color:#8b2020;font-weight:600;}
+.mu-t{color:var(--gt);}
+.cc{width:32px;}
+.cc input[type=checkbox]{width:14px;height:14px;accent-color:var(--vd);cursor:pointer;}
+.ft-bon{background:rgba(147,213,0,.13);color:#3a5500;font-size:9px;padding:1px 5px;border-radius:2px;}
+.ft-live{background:rgba(68,114,196,.15);color:#2a4a8a;font-size:9px;padding:1px 5px;border-radius:2px;}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px;align-items:center;}
+.fb{padding:4px 11px;border-radius:var(--r);font-size:10px;font-weight:700;font-family:'Montserrat',sans-serif;background:var(--gc);border:none;color:var(--gt);cursor:pointer;text-transform:uppercase;}
+.fb.active{background:var(--vd);color:var(--az);}
+.si{padding:6px 11px;border:1px solid #d2d2d2;border-radius:var(--r);font-family:'Inter',sans-serif;font-size:12px;background:#fff;color:var(--az);outline:none;width:150px;}
+.si:focus{border-color:var(--vd);}
+.tw2{background:#fff;border:1px solid var(--gc);border-radius:var(--rmd);overflow:hidden;margin-bottom:16px;}
+.ct-t{width:100%;border-collapse:collapse;}
+.ct-t thead th{background:var(--az);color:#fff;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:9px 11px;text-align:left;white-space:nowrap;}
+.ct-t thead th.r{text-align:right;}
+.ct-t tbody td{padding:8px 11px;font-size:12px;border-bottom:1px solid var(--gc);vertical-align:middle;}
+.ct-t tbody tr:last-child td{border-bottom:none;}
+.ct-t tbody tr:hover td{background:rgba(147,213,0,.04);}
+.ct-t tbody tr.br td{background:rgba(147,213,0,.06);}
+.ct-t tbody tr.pr td{background:rgba(26,63,71,.04);}
+.ct-t td.r{text-align:right;}
+.pill{display:inline-block;padding:2px 8px;border-radius:2px;font-size:11px;font-weight:600;}
+.pu{background:rgba(147,213,0,.15);color:#3a5500;}
+.pd{background:rgba(230,101,101,.14);color:#8b2020;}
+.pb{background:var(--gc);color:var(--gt);}
+.chart-card{background:#fff;border:1px solid var(--gc);border-radius:var(--rmd);padding:15px;margin-bottom:16px;}
+.ctop{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;flex-wrap:wrap;gap:6px;}
+.cttl{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:var(--az);}
+.leg-row{display:flex;flex-wrap:wrap;gap:9px;}
+.leg-i{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--gt);}
+.leg-sq{width:9px;height:9px;border-radius:1px;flex-shrink:0;}
+.tab-row{display:flex;gap:5px;margin-bottom:9px;}
+.tab-btn{padding:4px 11px;border-radius:var(--r);font-size:10px;font-weight:700;font-family:'Montserrat',sans-serif;background:var(--gc);border:none;color:var(--gt);cursor:pointer;text-transform:uppercase;}
+.tab-btn.active{background:var(--vd);color:var(--az);}
+.how{margin-bottom:16px;}
+.how-inner{border-radius:var(--rmd);overflow:hidden;border:1px solid #d2d2d2;background:#fff;}
+.how-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none;}
+.how-header:hover{background:rgba(147,213,0,.06);}
+.how-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--az);}
+.how-toggle{font-size:11px;color:var(--vd);font-weight:700;font-family:'Montserrat',sans-serif;}
+.how-body{padding:16px 18px 18px;border-top:1px solid var(--gc);}
+.how-steps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.how-step{display:flex;align-items:flex-start;gap:10px;}
+.how-num{width:22px;height:22px;border-radius:50%;background:var(--vd);color:var(--az);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.how-text{font-size:12px;color:var(--az);line-height:1.55;}
+.how-glosario{background:var(--gc);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;}
+.how-g-title{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:var(--gt);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;}
+.how-g-row{display:flex;gap:10px;font-size:11px;padding:3px 0;border-bottom:1px solid rgba(87,87,86,.1);}
+.how-g-row:last-child{border-bottom:none;}
+.how-g-key{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--az);min-width:52px;}
+.how-g-val{color:var(--gt);line-height:1.5;}
+.how-footer{font-size:10px;color:var(--gt);text-align:right;}
+.footer{background:var(--az);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+.fd{font-size:11px;color:rgba(255,255,255,.36);line-height:1.5;max-width:740px;}
+.fb2{font-family:'Montserrat',sans-serif;font-size:11px;color:var(--vd);font-weight:700;text-align:right;white-space:nowrap;margin-left:18px;}
+.spin{display:inline-block;width:10px;height:10px;border:2px solid rgba(147,213,0,.25);border-top-color:var(--vd);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:4px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.g3{grid-template-columns:1fr 1fr;}}
+@media(max-width:720px){.g3{grid-template-columns:1fr;}.g4{grid-template-columns:1fr 1fr;}.page{padding:13px 10px 32px;}.how-steps{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tl">
+    <div><div class="ln">S &amp; C</div><div class="ls">Inversiones S.A.</div></div>
+    <div class="lsep"></div>
+    <div style="color:rgba(255,255,255,.62);font-size:12px;font-weight:300;">Simulador de Renta Fija</div>
+  </div>
+  <div class="tr2">
+    <div class="ldot"></div>
+    <span class="ltxt" id="statusTxt">Cargando...</span>
+    <button class="rb" onclick="init()">&#8635; Actualizar</button>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="ph">
+  <div class="tw"><span class="thl">Simulador</span><span class="tmn">de inversiones<span class="tdot">.</span></span></div>
+  <div class="psub">Lecaps - Boncaps - Bote - Bonte | Datos Bonistas.com | TIR/TEM/TNA identicas a Bonistas</div>
+</div>
+
+<!-- HOW TO -->
+<div class="how">
+  <div class="how-inner">
+    <div class="how-header" onclick="toggleHow()">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:var(--vd);width:6px;height:24px;border-radius:2px;flex-shrink:0;"></div>
+        <span class="how-title">Como usar este simulador?</span>
+      </div>
+      <span class="how-toggle" id="howToggle">&#9660; Ver guia</span>
+    </div>
+    <div class="how-body" id="howBody" style="display:none;">
+      <div class="how-steps">
+        <div class="how-step"><div class="how-num">1</div><div class="how-text"><strong>Ingresa tu monto</strong> - el capital que queres invertir en pesos.</div></div>
+        <div class="how-step"><div class="how-num">2</div><div class="how-text"><strong>Elegi el horizonte</strong> - los plazos especiales corresponden al vencimiento exacto de un titulo. Al seleccionarlos, el instrumento comparable se tilda automaticamente.</div></div>
+        <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>Selecciona tu banco</strong> - se carga la TNA vigente del Plazo Fijo (BCRA Mar 2026).</div></div>
+        <div class="how-step"><div class="how-num">4</div><div class="how-text"><strong>Elegi la categoria del cliente</strong> - Estandar (1.20%) o Preferente (1.00%). Las comisiones se descuentan del capital final.</div></div>
+        <div class="how-step"><div class="how-num">5</div><div class="how-text"><strong>Revisa la comparativa automatica</strong> - muestra instrumentos con vencimiento +-10 dias de tu horizonte vs el PF.</div></div>
+        <div class="how-step"><div class="how-num">6</div><div class="how-text"><strong>Selecciona tickers manualmente</strong> - con los checkboxes en la tabla de mercado podes comparar cualquier instrumento.</div></div>
+      </div>
+      <div class="how-glosario">
+        <div class="how-g-title">Glosario rapido</div>
+        <div class="how-g-row"><span class="how-g-key">TIR</span><span class="how-g-val">Tasa Interna de Retorno anual efectiva.</span></div>
+        <div class="how-g-row"><span class="how-g-key">TEM</span><span class="how-g-val">Tasa Efectiva Mensual - cuanto rinde cada 30 dias.</span></div>
+        <div class="how-g-row"><span class="how-g-key">TNA</span><span class="how-g-val">Tasa Nominal Anual - TEM x 12.</span></div>
+        <div class="how-g-row"><span class="how-g-key">VT</span><span class="how-g-val">Valor Tecnico - precio de rescate al vencimiento por cada $100 VN.</span></div>
+        <div class="how-g-row"><span class="how-g-key">Lecap</span><span class="how-g-val">Letra de capitalizacion del Tesoro. Sin cupones, paga VT al vencer.</span></div>
+        <div class="how-g-row"><span class="how-g-key">Boncap</span><span class="how-g-val">Bono de capitalizacion del Tesoro. Mayor plazo que Lecap.</span></div>
+        <div class="how-g-row"><span class="how-g-key">Bote/Bonte</span><span class="how-g-val">Bonos del Tesoro con cupones periodicos.</span></div>
+      </div>
+      <div class="how-footer">Datos: Bonistas.com | Tasas bancarias: BCRA Mar 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="api-bar" id="apiBar">
+  <span><div class="spin"></div>Iniciando...</span>
+</div>
+
+<div class="nota">
+  <strong>Metodologia identica a Bonistas.com:</strong>
+  TEM = tasa efectiva mensual implicita en precio vs VT. TNA = TEM x 12. TIR = (1+TEM)^12 - 1.
+  <strong>Comisiones S&amp;C:</strong> MAX(Monto x Arancel% x dias/365 , $100) + Nominales x 0.0001
+</div>
+
+<!-- PARAMETROS -->
+<div class="sec">
+  <div class="sl"><span class="ar">&#8594;</span> Parametros de inversion</div>
+  <div class="g3">
+
+    <div class="card">
+      <div class="ct"><span class="dot"></span> Tu inversion</div>
+      <div class="fg">
+        <label>Monto (ARS)</label>
+        <div class="rel"><span class="pfx">$</span><input type="number" id="monto" value="1000000" min="1000" step="10000" oninput="actualizarPill();recalcular()"></div>
+      </div>
+      <div class="fg">
+        <label>Horizonte / plazo (dias)</label>
+        <select id="horizonte" onchange="onHorizonte()">
+          <option value="21">21 dias - comparable S17A6</option>
+          <option value="30">30 dias</option>
+          <option value="34">34 dias - comparable S30A6</option>
+          <option value="60">60 dias</option>
+          <option value="63">63 dias - comparable S29Y6</option>
+          <option value="90">90 dias</option>
+          <option value="95">95 dias - comparable T30J6</option>
+          <option value="126">126 dias - comparable S31L6</option>
+          <option value="157">157 dias - comparable S31G6</option>
+          <option value="180">180 dias</option>
+          <option value="217">217 dias - comparable S30O6</option>
+          <option value="248" selected>248 dias - comparable S30N6</option>
+          <option value="294">294 dias - comparable T15E7</option>
+          <option value="365">365 dias</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ct"><span class="dot"></span> Comisiones S&amp;C</div>
+      <div class="fg">
+        <label>Categoria del cliente</label>
+        <select id="catCliente" onchange="onCategoria()">
+          <option value="estandar">Estandar - Arancel 1.20%</option>
+          <option value="preferente">Preferente - Arancel 1.00%</option>
+          <option value="personalizada">Personalizada</option>
+        </select>
+      </div>
+      <div class="fg" id="comisionWrap" style="display:none;">
+        <label>Arancel personalizado (%)</label>
+        <div class="rel"><input type="number" id="comisionCustom" value="0" min="0" max="10" step="0.01" class="sf" oninput="actualizarPill();recalcular()"><span class="sfx">%</span></div>
+      </div>
+      <div class="fg">
+        <label>Mercado</label>
+        <select id="mercado" onchange="recalcular()">
+          <option value="byma">BYMA</option>
+          <option value="mav">MAV</option>
+        </select>
+      </div>
+      <div class="com-pill" id="comPill">-</div>
+    </div>
+
+    <div class="card">
+      <div class="ct"><span class="dot"></span> Plazo Fijo</div>
+      <div class="fg">
+        <label>En que banco sos cliente?</label>
+        <div class="bsw">
+          <select id="bancoSel" onchange="onBanco()">
+            <option value="">- Selecciona tu banco -</option>
+            <optgroup label="Grandes bancos">
+              <option value="macro">Banco Macro</option>
+              <option value="nacion">Banco Nacion Argentina</option>
+              <option value="provincia">Banco Provincia de Bs. As.</option>
+              <option value="credicoop">Banco Credicoop</option>
+              <option value="bbva">Banco BBVA Argentina</option>
+              <option value="santander">Banco Santander</option>
+              <option value="galicia">Banco Galicia</option>
+              <option value="ciudad">Banco Ciudad de Bs. As.</option>
+              <option value="icbc">Banco ICBC</option>
+              <option value="hsbc">Banco HSBC</option>
+            </optgroup>
+            <optgroup label="Bancos medianos">
+              <option value="cordoba">Banco de Cordoba</option>
+              <option value="hipotecario">Banco Hipotecario</option>
+              <option value="supervielle">Banco Supervielle</option>
+              <option value="patagonia">Banco Patagonia</option>
+              <option value="comafi">Banco Comafi</option>
+              <option value="chubut">Banco del Chubut</option>
+            </optgroup>
+            <optgroup label="Financieras digitales">
+              <option value="cmf">Banco CMF</option>
+              <option value="meridian">Banco Meridian</option>
+              <option value="voii">Banco Voii</option>
+              <option value="julio">Banco Julio</option>
+              <option value="bibank">Bibank</option>
+            </optgroup>
+            <optgroup label="Otro"><option value="otro">Otro / tasa manual</option></optgroup>
+          </select>
+        </div>
+        <div class="btp" id="bancoPill">
+          <div><div class="btp-n" id="pillN"></div><div class="btp-sub">TNA PF - Clientes (BCRA Mar 2026)</div></div>
+          <div class="btp-tna" id="pillT"></div>
+        </div>
+      </div>
+      <div class="fg" id="tnaWrap">
+        <label>TNA del PF (%)</label>
+        <div class="rel"><input type="number" id="tna_m" value="28" min="0" max="500" step="0.5" class="sf" oninput="recalcular()"><span class="sfx">%</span></div>
+      </div>
+      <div class="fg">
+        <label>Renovacion</label>
+        <select id="renov" onchange="recalcular()">
+          <option value="automatica">Automatica (capitaliza)</option>
+          <option value="manual">Manual (retiro intereses)</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MERCADO -->
+<div class="sec">
+  <div class="sl"><span class="ar">&#8594;</span> Mercado - todos los instrumentos - Bonistas.com</div>
+  <div class="filter-row">
+    <button class="fb active" onclick="setF('todos',this)">Todos</button>
+    <button class="fb" onclick="setF('Lecap',this)">Lecap</button>
+    <button class="fb" onclick="setF('Boncap',this)">Boncap</button>
+    <button class="fb" onclick="setF('Bote',this)">Bote</button>
+    <button class="fb" onclick="setF('Bonte',this)">Bonte</button>
+    <input type="text" class="si" id="search" placeholder="Buscar ticker..." oninput="renderMkt()">
+  </div>
+  <div class="mkt-wrap">
+    <table class="mkt-t">
+      <thead><tr>
+        <th class="c cc"></th>
+        <th onclick="sortBy('t')">Ticker <span class="sort-ic" id="si-t">&#8645;</span></th>
+        <th onclick="sortBy('tipo')">Tipo <span class="sort-ic" id="si-tipo">&#8645;</span></th>
+        <th onclick="sortBy('venc')">Vencimiento <span class="sort-ic" id="si-venc">&#8645;</span></th>
+        <th class="r" onclick="sortBy('precio')">Precio <span class="sort-ic" id="si-precio">&#8645;</span></th>
+        <th class="r" onclick="sortBy('vt')">VT <span class="sort-ic" id="si-vt">&#8645;</span></th>
+        <th class="r" onclick="sortBy('var')">Var% <span class="sort-ic" id="si-var">&#8645;</span></th>
+        <th class="r" onclick="sortBy('tir')">TIR <span class="sort-ic" id="si-tir">&#8645;</span></th>
+        <th class="r" onclick="sortBy('tem')">TEM <span class="sort-ic" id="si-tem">&#8645;</span></th>
+        <th class="r" onclick="sortBy('tna')">TNA <span class="sort-ic" id="si-tna">&#8645;</span></th>
+        <th class="r" onclick="sortBy('dias')">Dias <span class="sort-ic" id="si-dias">&#8645;</span></th>
+        <th>Fuente</th>
+      </tr></thead>
+      <tbody id="mktBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="alertaDiv"></div>
+
+<div class="sec">
+  <div class="sl"><span class="ar">&#8594;</span> Comparativa automatica - vencimiento +-10 dias del horizonte</div>
+  <div id="autoCompare"></div>
+</div>
+
+<div class="sec">
+  <div class="sl"><span class="ar">&#8594;</span> Capital final - seleccionados vs Plazo Fijo</div>
+  <div class="g4" id="metricasGrid"></div>
+</div>
+
+<div class="sec">
+  <div class="sl"><span class="ar">&#8594;</span> Detalle instrumentos seleccionados</div>
+  <div class="tw2">
+    <table class="ct-t">
+      <thead><tr>
+        <th>Instrumento</th><th>Tipo</th>
+        <th class="r">Precio</th><th class="r">VT</th>
+        <th class="r">TIR</th><th class="r">TEM</th><th class="r">TNA</th>
+        <th class="r">Dias</th><th class="r">Bruto</th><th class="r">Comision</th><th class="r">Capital neto</th><th class="r">Ganancia</th><th class="r">vs. PF</th>
+      </tr></thead>
+      <tbody id="resBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sl"><span class="ar">&#8594;</span> Evolucion del capital</div>
+  <div class="chart-card">
+    <div class="ctop">
+      <span class="cttl">Crecimiento del capital proyectado (neto de comisiones)</span>
+      <div class="leg-row" id="legWrap"></div>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="setChartMode('lineal',this)">Lineal</button>
+      <button class="tab-btn" onclick="setChartMode('mensual',this)">Mensual</button>
+    </div>
+    <div style="position:relative;width:100%;height:270px;"><canvas id="myChart"></canvas></div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="fd"><strong style="color:rgba(255,255,255,.58)">Aviso legal:</strong> Simulador informativo. Precios y tasas segun Bonistas.com. Tasas PF segun BCRA Mar 2026. Comisiones segun planilla S&amp;C Inversiones. Consulta a tu asesor antes de invertir.</div>
+  <div class="fb2">S&amp;C Inversiones S.A.<br><span style="font-weight:300;color:rgba(255,255,255,.32);font-family:'Inter'">www.sycinversiones.com</span></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+
+var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwX-MhXsDiMO_z55Ac1j1mQemPqxb9sbN0HfwPAmtSV3rr7VMeTjBGOT_1YsWqqmRGTtw/exec';
+
+// helpers
+function fa(v){ return '$' + Math.round(v).toLocaleString('es-AR'); }
+function fp(v,d){ d = d || 2; return v.toFixed(d) + '%'; }
+
+// bancos
+var BTNA = {macro:28,nacion:25,provincia:25,credicoop:24,bbva:24,santander:23,galicia:23,ciudad:23,icbc:23.5,hsbc:22,cordoba:25,hipotecario:23.5,supervielle:22,patagonia:22,comafi:23,chubut:23.5,cmf:29,meridian:28,voii:28,julio:27,bibank:27};
+var BN = {macro:'Banco Macro',nacion:'Banco Nacion',provincia:'Banco Provincia',credicoop:'Banco Credicoop',bbva:'Banco BBVA',santander:'Banco Santander',galicia:'Banco Galicia',ciudad:'Banco Ciudad',icbc:'Banco ICBC',hsbc:'Banco HSBC',cordoba:'Banco de Cordoba',hipotecario:'Banco Hipotecario',supervielle:'Banco Supervielle',patagonia:'Banco Patagonia',comafi:'Banco Comafi',chubut:'Banco del Chubut',cmf:'Banco CMF',meridian:'Banco Meridian',voii:'Banco Voii',julio:'Banco Julio',bibank:'Bibank'};
+
+// comisiones
+var ARANCEL = {estandar:1.20, preferente:1.00};
+
+function getArancel(){
+  var cat = document.getElementById('catCliente').value;
+  if(cat === 'personalizada') return parseFloat(document.getElementById('comisionCustom').value) || 0;
+  return ARANCEL[cat];
+}
+
+function costoTotal(monto, dias, precio){
+  var arancel = getArancel();
+  var p = (precio && precio > 0) ? precio : 100;
+  var nominales = Math.floor(monto / p * 100);
+  var cArancel = Math.max((monto * arancel / 100) * dias / 365, 100);
+  var cMcdo = nominales * 0.0001;
+  return cArancel + cMcdo;
+}
+
+function actualizarPill(){
+  var arancel = getArancel();
+  var cat = document.getElementById('catCliente').value;
+  var monto = parseFloat(document.getElementById('monto').value) || 1000000;
+  var dias = parseInt(document.getElementById('horizonte').value) || 30;
+  var costo = costoTotal(monto, dias, 100);
+  var lbl = cat === 'estandar' ? 'Estandar' : cat === 'preferente' ? 'Preferente' : 'Personalizada';
+  document.getElementById('comPill').innerHTML =
+    '<strong>' + lbl + '</strong> - Arancel: <strong>' + arancel.toFixed(2) + '% anual</strong><br>' +
+    'D.Mcdo: Nominales x 0.01% - ' +
+    'Costo est. ' + dias + 'd: <strong style="color:#8b2020">-' + fa(costo) + '</strong>';
+}
+
+function onCategoria(){
+  document.getElementById('comisionWrap').style.display =
+    document.getElementById('catCliente').value === 'personalizada' ? '' : 'none';
+  actualizarPill();
+  recalcular();
+}
+
+// instrumentos
+var INST = [
+  {t:'S17A6', tipo:'Lecap', venc:'2026-04-17', precio:108.785, varP:0.16,  vt:108.714, tir:28.2, tem:2.1, tna:25.1, dias:21,   _sel:false},
+  {t:'S30A6', tipo:'Lecap', venc:'2026-04-30', precio:124.899, varP:0.16,  vt:123.560, tir:27.3, tem:2.0, tna:24.4, dias:34,   _sel:false},
+  {t:'S29Y6', tipo:'Lecap', venc:'2026-05-29', precio:126.799, varP:0.13,  vt:126.778, tir:28.0, tem:2.1, tna:24.9, dias:63,   _sel:false},
+  {t:'S31L6', tipo:'Lecap', venc:'2026-07-31', precio:108.161, varP:0.01,  vt:105.892, tir:28.4, tem:2.1, tna:25.3, dias:126,  _sel:false},
+  {t:'S31G6', tipo:'Lecap', venc:'2026-08-31', precio:114.207, varP:-0.02, vt:113.020, tir:28.8, tem:2.1, tna:25.6, dias:157,  _sel:false},
+  {t:'S30O6', tipo:'Lecap', venc:'2026-10-30', precio:115.990, varP:0.25,  vt:114.699, tir:30.0, tem:2.2, tna:26.5, dias:217,  _sel:false},
+  {t:'S30N6', tipo:'Lecap', venc:'2026-11-30', precio:109.126, varP:0.59,  vt:109.096, tir:29.6, tem:2.2, tna:26.2, dias:248,  _sel:false},
+  {t:'T30J6', tipo:'Boncap',venc:'2026-06-30', precio:136.000, varP:0.22,  vt:137.170, tir:28.6, tem:2.1, tna:25.4, dias:95,   _sel:false},
+  {t:'T15E7', tipo:'Boncap',venc:'2027-01-15', precio:130.500, varP:0.31,  vt:136.402, tir:30.2, tem:2.2, tna:26.7, dias:294,  _sel:false},
+  {t:'T30A7', tipo:'Boncap',venc:'2027-04-30', precio:118.300, varP:0.25,  vt:115.928, tir:30.1, tem:2.2, tna:26.6, dias:399,  _sel:false},
+  {t:'T31Y7', tipo:'Boncap',venc:'2027-05-31', precio:111.850, varP:0.77,  vt:110.293, tir:29.7, tem:2.2, tna:26.3, dias:430,  _sel:false},
+  {t:'T30J7', tipo:'Boncap',venc:'2027-06-30', precio:112.850, varP:-1.01, vt:107.914, tir:29.5, tem:2.2, tna:26.2, dias:460,  _sel:false},
+  {t:'TO26',  tipo:'Bote',  venc:'2026-10-17', precio:100.100, varP:-0.10, vt:107.018, tir:31.7, tem:2.3, tna:27.8, dias:204,  _sel:false},
+  {t:'TY30P', tipo:'Bonte', venc:'2030-05-30', precio:119.500, varP:0.67,  vt:109.833, tir:27.1, tem:2.0, tna:24.2, dias:1525, _sel:false}
+];
+
+var HORIZ_TICKER = {21:'S17A6',34:'S30A6',63:'S29Y6',95:'T30J6',126:'S31L6',157:'S31G6',217:'S30O6',248:'S30N6',294:'T15E7'};
+
+// capital
+function capFinalTitulo(inst, monto, horizDias){
+  var tem = inst.tem / 100;
+  var diasEf = Math.min(horizDias, inst.dias);
+  var mesesEf = diasEf / 30;
+  var bruto = monto * Math.pow(1 + tem, mesesEf);
+  var costo = costoTotal(monto, diasEf, inst.precio);
+  return {neto: bruto - costo, bruto: bruto, costo: costo};
+}
+
+function capPF(monto, horiz, tna, renov){
+  if(renov === 'automatica'){
+    var p = Math.floor(horiz/30), r = horiz%30, c = monto;
+    for(var i=0;i<p;i++) c *= (1 + tna*30/365);
+    if(r>0) c *= (1 + tna*r/365);
+    return c;
+  }
+  return monto * (1 + tna*horiz/365);
+}
+
+// banco
+function onBanco(){
+  var sel = document.getElementById('bancoSel').value;
+  var pill = document.getElementById('bancoPill');
+  var tw = document.getElementById('tnaWrap');
+  if(sel && sel !== 'otro' && BTNA[sel]){
+    document.getElementById('pillN').textContent = BN[sel];
+    document.getElementById('pillT').textContent = BTNA[sel] + '% TNA';
+    pill.classList.add('show'); tw.style.display = 'none';
+  } else {
+    pill.classList.remove('show'); tw.style.display = '';
+  }
+  recalcular();
+}
+function getTNA(){
+  var sel = document.getElementById('bancoSel').value;
+  if(sel && sel !== 'otro' && BTNA[sel]) return BTNA[sel]/100;
+  return (parseFloat(document.getElementById('tna_m').value)||28)/100;
+}
+function getPFLabel(){
+  var sel = document.getElementById('bancoSel').value;
+  if(sel && sel !== 'otro' && BN[sel]) return 'PF ' + BN[sel];
+  return 'Plazo Fijo';
+}
+
+// horizonte
+function onHorizonte(){
+  INST.forEach(function(i){ i._sel = false; });
+  var h = parseInt(document.getElementById('horizonte').value);
+  var tk = HORIZ_TICKER[h];
+  if(tk){ var inst = INST.find(function(i){ return i.t === tk; }); if(inst) inst._sel = true; }
+  actualizarPill();
+  renderMkt();
+  recalcular();
+}
+
+// tabla mercado
+var filtro = 'todos', sortCol = 'dias', sortAsc = true;
+function setF(f,btn){
+  filtro = f;
+  document.querySelectorAll('.fb').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderMkt();
+}
+function sortBy(col){
+  if(sortCol === col) sortAsc = !sortAsc; else { sortCol = col; sortAsc = true; }
+  document.querySelectorAll('[id^=si-]').forEach(function(el){ el.innerHTML = '&#8645;'; });
+  var ic = document.getElementById('si-'+col);
+  if(ic) ic.innerHTML = sortAsc ? '&#8593;' : '&#8595;';
+  renderMkt();
+}
+function renderMkt(){
+  var search = document.getElementById('search').value.toLowerCase();
+  var tc = {Lecap:'tL',Boncap:'tB',Bote:'tBT',Bonte:'tBN'};
+  var rows = INST.filter(function(i){ return filtro === 'todos' || i.tipo === filtro; })
+                 .filter(function(i){ return i.t.toLowerCase().indexOf(search) >= 0; });
+  rows.sort(function(a,b){
+    var vals = {t:'t',tipo:'tipo',venc:'venc',precio:'precio',vt:'vt',var:'varP',tir:'tir',tem:'tem',tna:'tna',dias:'dias'};
+    var key = vals[sortCol] || 'dias';
+    var av = a[key], bv = b[key];
+    if(sortAsc) return av < bv ? -1 : av > bv ? 1 : 0;
+    return av > bv ? -1 : av < bv ? 1 : 0;
+  });
+  var tbody = document.getElementById('mktBody');
+  tbody.innerHTML = '';
+  rows.forEach(function(inst){
+    var vc = inst.varP > 0 ? 'vup' : inst.varP < 0 ? 'vdn' : '';
+    var vs = (inst.varP >= 0 ? '+' : '') + inst.varP.toFixed(2) + '%';
+    var fu = inst._fuente || 'bon';
+    var ftCls = fu === 'byma' ? 'ft-live' : 'ft-bon';
+    var ftLbl = fu === 'byma' ? '&#9679; BYMA' : '&#9679; Bonistas';
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="c cc"><input type="checkbox"' + (inst._sel?' checked':'') + ' onchange="toggleT(\'' + inst.t + '\',this)"></td>' +
+      '<td><span class="mono">' + inst.t + '</span></td>' +
+      '<td><span class="tag ' + (tc[inst.tipo]||'tL') + '">' + inst.tipo + '</span></td>' +
+      '<td class="mu-t">' + inst.venc + '</td>' +
+      '<td class="r" style="font-weight:600">' + inst.precio.toFixed(3) + '</td>' +
+      '<td class="r mu-t">' + inst.vt.toFixed(3) + '</td>' +
+      '<td class="r ' + vc + '">' + vs + '</td>' +
+      '<td class="r vd-t">' + inst.tir.toFixed(1) + '%</td>' +
+      '<td class="r vd-t">' + inst.tem.toFixed(1) + '%</td>' +
+      '<td class="r mu-t">' + inst.tna.toFixed(1) + '%</td>' +
+      '<td class="r" style="color:' + (inst.dias<=30?'#8b2020':'var(--gt)') + ';font-weight:' + (inst.dias<=30?700:300) + '">' + inst.dias + '</td>' +
+      '<td><span class="' + ftCls + '">' + ftLbl + '</span></td>';
+    tbody.appendChild(tr);
+  });
+}
+function toggleT(t,cb){
+  var inst = INST.find(function(i){ return i.t === t; });
+  if(inst) inst._sel = cb.checked;
+  recalcular();
+}
+
+// recalcular
+var chartInst = null, chartMode = 'lineal';
+
+function recalcular(){
+  var monto   = parseFloat(document.getElementById('monto').value) || 1000000;
+  var horiz   = parseInt(document.getElementById('horizonte').value) || 30;
+  var tna     = getTNA();
+  var pfLbl   = getPFLabel();
+  var renov   = document.getElementById('renov').value;
+  var pfFinal = capPF(monto, horiz, tna, renov);
+  var pfTEM   = tna / 12;
+
+  // comparativa automatica
+  var similares = INST.filter(function(i){ return Math.abs(i.dias - horiz) <= 10; });
+  var autoDiv = document.getElementById('autoCompare');
+
+  if(!similares.length){
+    autoDiv.innerHTML = '<div class="al neu">No hay instrumentos con vencimiento dentro de +-10 dias del horizonte (' + horiz + ' dias).</div>';
+  } else {
+    var rows = similares.map(function(inst){
+      var r = capFinalTitulo(inst, monto, horiz);
+      return {inst:inst, neto:r.neto, bruto:r.bruto, costo:r.costo, vsPF:r.neto - pfFinal};
+    });
+    rows.sort(function(a,b){ return b.neto - a.neto; });
+    var best = rows[0];
+    var html = '<div class="tw2"><table class="ct-t"><thead><tr>' +
+      '<th>Instrumento</th><th>Tipo</th>' +
+      '<th class="r">Precio</th><th class="r">TIR</th><th class="r">TEM</th><th class="r">TNA</th>' +
+      '<th class="r">Dias</th><th class="r">Bruto</th><th class="r">Comision</th><th class="r">Capital neto</th><th class="r">vs. PF</th>' +
+      '</tr></thead><tbody>';
+    html += '<tr class="pr"><td><strong>' + pfLbl + '</strong></td><td><span class="tag tPF">PF Bancario</span></td>' +
+      '<td class="r mu-t">-</td>' +
+      '<td class="r">' + fp(tna*100,1) + '</td><td class="r">' + fp(pfTEM*100,2) + '</td><td class="r">' + fp(tna*100,1) + '</td>' +
+      '<td class="r mu-t">' + horiz + 'd</td>' +
+      '<td class="r"><strong>' + fa(pfFinal) + '</strong></td>' +
+      '<td class="r mu-t">-</td>' +
+      '<td class="r"><strong>' + fa(pfFinal) + '</strong></td>' +
+      '<td class="r"><span class="pill pb">base</span></td></tr>';
+    rows.forEach(function(row){
+      var mejor = row.inst === best.inst;
+      var ttc = {Lecap:'tL',Boncap:'tB',Bote:'tBT',Bonte:'tBN'}[row.inst.tipo] || 'tL';
+      var vsPFcls = row.vsPF >= 0 ? 'pu' : 'pd';
+      html += '<tr' + (mejor?' class="br"':'') + '>' +
+        '<td><span class="mono">' + row.inst.t + '</span>' + (mejor?' <span class="pill pu" style="font-size:9px">&#9733; Mejor</span>':'') + '</td>' +
+        '<td><span class="tag ' + ttc + '">' + row.inst.tipo + '</span></td>' +
+        '<td class="r mu-t">' + row.inst.precio.toFixed(3) + '</td>' +
+        '<td class="r vd-t">' + row.inst.tir.toFixed(1) + '%</td>' +
+        '<td class="r vd-t">' + row.inst.tem.toFixed(1) + '%</td>' +
+        '<td class="r mu-t">' + row.inst.tna.toFixed(1) + '%</td>' +
+        '<td class="r mu-t">' + row.inst.dias + '</td>' +
+        '<td class="r mu-t">' + fa(row.bruto) + '</td>' +
+        '<td class="r rj-t">-' + fa(row.costo) + '</td>' +
+        '<td class="r"><strong>' + fa(row.neto) + '</strong></td>' +
+        '<td class="r"><span class="pill ' + vsPFcls + '">' + (row.vsPF>=0?'+':'') + fa(row.vsPF) + '</span></td>' +
+        '</tr>';
+    });
+    html += '</tbody></table></div>';
+    var diff = best.vsPF;
+    var dp = (diff / pfFinal * 100).toFixed(1);
+    var alerta = diff > 0
+      ? '<div class="al"><strong>' + best.inst.t + '</strong> rinde <strong>' + fa(diff) + ' mas</strong> que tu PF en ' + horiz + ' dias (+' + dp + '%) - neto de comisiones</div>'
+      : '<div class="al pfw">Tu <strong>' + pfLbl + '</strong> supera a los instrumentos con vencimiento similar (+' + fa(-diff) + ') - neto de comisiones</div>';
+    autoDiv.innerHTML = alerta + html;
+  }
+
+  // seleccionados
+  var sel = INST.filter(function(i){ return i._sel; });
+  var bestInst = null, bestFinal = pfFinal;
+  var res = sel.map(function(inst){
+    var r = capFinalTitulo(inst, monto, horiz);
+    if(r.neto > bestFinal){ bestFinal = r.neto; bestInst = inst; }
+    return {inst:inst, neto:r.neto, bruto:r.bruto, costo:r.costo, ganancia:r.neto-monto, vsPF:r.neto-pfFinal};
+  });
+
+  var aDiv = document.getElementById('alertaDiv');
+  if(res.length > 0 && bestInst){
+    var d2 = bestFinal - pfFinal, dp2 = (d2/pfFinal*100).toFixed(1);
+    aDiv.innerHTML = d2 > 0
+      ? '<div class="al"><strong>' + bestInst.t + '</strong> rinde <strong>' + fa(d2) + ' mas</strong> que tu PF (+' + dp2 + '%) - neto comisiones</div>'
+      : '<div class="al pfw">Tu <strong>' + pfLbl + '</strong> supera a todos los seleccionados - neto de comisiones.</div>';
+  } else aDiv.innerHTML = '';
+
+  // metricas
+  var mg = document.getElementById('metricasGrid');
+  mg.innerHTML = '';
+  var cards = [{l:pfLbl, v:fa(pfFinal), s:'+'+fa(pfFinal-monto), cls:'pfmc', tag:'PF'}];
+  res.slice(0,3).forEach(function(r){
+    cards.push({l:r.inst.t, v:fa(r.neto), s:(r.vsPF>=0?'+':'')+fa(r.vsPF)+' vs PF', cls:r.inst===bestInst?'best':'', tag:r.inst===bestInst?'&#9733; Mejor':''});
+  });
+  cards.forEach(function(m){
+    var d = document.createElement('div');
+    d.className = 'mc ' + (m.cls||'');
+    d.innerHTML = (m.tag?'<span class="mct">'+m.tag+'</span>':'') +
+      '<div class="mcl">'+m.l+'</div><div class="mcv">'+m.v+'</div><div class="mcs">'+m.s+'</div>';
+    mg.appendChild(d);
+  });
+
+  // tabla detalle
+  var tbody = document.getElementById('resBody');
+  tbody.innerHTML = '';
+  var pr = document.createElement('tr'); pr.className = 'pr';
+  pr.innerHTML = '<td><strong>' + pfLbl + '</strong></td><td><span class="tag tPF">Bancario</span></td>' +
+    '<td class="r mu-t">-</td><td class="r mu-t">-</td>' +
+    '<td class="r">' + fp(tna*100,1) + '</td><td class="r mu-t">' + fp(pfTEM*100,2) + '</td><td class="r mu-t">' + fp(tna*100,1) + '</td>' +
+    '<td class="r mu-t">' + horiz + 'd</td>' +
+    '<td class="r"><strong>' + fa(pfFinal) + '</strong></td>' +
+    '<td class="r mu-t">-</td>' +
+    '<td class="r"><strong>' + fa(pfFinal) + '</strong></td>' +
+    '<td class="r mu-t">' + fa(pfFinal-monto) + '</td>' +
+    '<td class="r"><span class="pill pb">base</span></td>';
+  tbody.appendChild(pr);
+  res.forEach(function(r){
+    var tr = document.createElement('tr');
+    if(r.inst === bestInst) tr.className = 'br';
+    var ttc = {Lecap:'tL',Boncap:'tB',Bote:'tBT',Bonte:'tBN'}[r.inst.tipo] || 'tL';
+    tr.innerHTML =
+      '<td><span class="mono">'+r.inst.t+'</span></td>' +
+      '<td><span class="tag '+ttc+'">'+r.inst.tipo+'</span></td>' +
+      '<td class="r mu-t">'+r.inst.precio.toFixed(3)+'</td>' +
+      '<td class="r mu-t">'+r.inst.vt.toFixed(3)+'</td>' +
+      '<td class="r vd-t">'+r.inst.tir.toFixed(1)+'%</td>' +
+      '<td class="r vd-t">'+r.inst.tem.toFixed(1)+'%</td>' +
+      '<td class="r mu-t">'+r.inst.tna.toFixed(1)+'%</td>' +
+      '<td class="r mu-t">'+r.inst.dias+'</td>' +
+      '<td class="r mu-t">'+fa(r.bruto)+'</td>' +
+      '<td class="r rj-t">-'+fa(r.costo)+'</td>' +
+      '<td class="r"><strong>'+fa(r.neto)+'</strong></td>' +
+      '<td class="r '+(r.vsPF>=0?'vd-t':'rj-t')+'">'+fa(r.ganancia)+'</td>' +
+      '<td class="r"><span class="pill '+(r.vsPF>=0?'pu':'pd')+'">'+(r.vsPF>=0?'+':'')+fa(r.vsPF)+'</span></td>';
+    tbody.appendChild(tr);
+  });
+
+  renderChart(monto, horiz, tna, renov, res, pfLbl);
+}
+
+// grafico
+var CC = ['#93D500','#1A3F47','#4472C4','#ffde59','#e66565','#a78bfa'];
+function renderChart(monto, horiz, tna, renov, res, pfLbl){
+  var pts = chartMode === 'mensual' ? Math.ceil(horiz/30) : Math.min(horiz,60);
+  var da = [], la = [];
+  for(var i=0;i<=pts;i++){ var d=Math.round(i*horiz/pts); da.push(d); la.push('Dia '+d); }
+  var ds = [{label:pfLbl, data:da.map(function(d){ return capPF(monto,d,tna,renov); }),
+    borderColor:'#575756', borderWidth:2, borderDash:[5,4], tension:.4, fill:false, pointRadius:0}];
+  res.forEach(function(r,i){
+    ds.push({label:r.inst.t, data:da.map(function(d){ return capFinalTitulo(r.inst,monto,d).neto; }),
+      borderColor:CC[i]||'#93D500', borderWidth:2, tension:.4, fill:false, pointRadius:0});
+  });
+  document.getElementById('legWrap').innerHTML = ds.map(function(d){
+    return '<div class="leg-i"><div class="leg-sq" style="background:'+d.borderColor+'"></div><span>'+d.label+'</span></div>';
+  }).join('');
+  if(chartInst){ chartInst.destroy(); chartInst = null; }
+  chartInst = new Chart(document.getElementById('myChart').getContext('2d'),{
+    type:'line', data:{labels:la, datasets:ds},
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false}, tooltip:{backgroundColor:'#1A3F47',borderColor:'rgba(147,213,0,.3)',borderWidth:1,
+        titleColor:'rgba(255,255,255,.55)',bodyColor:'#fff',padding:10,
+        callbacks:{label:function(c){ return ' '+c.dataset.label+': '+fa(c.raw); }}}},
+      scales:{
+        x:{grid:{color:'rgba(87,87,86,.08)'},ticks:{color:'#575756',font:{size:10},maxTicksLimit:8,autoSkip:true}},
+        y:{grid:{color:'rgba(87,87,86,.08)'},ticks:{color:'#575756',font:{size:10},callback:function(v){ return '$'+(v/1000).toFixed(0)+'k'; }}}
+      }}
+  });
+}
+function setChartMode(m,btn){
+  chartMode = m;
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  recalcular();
+}
+
+// how to
+function toggleHow(){
+  var body = document.getElementById('howBody');
+  var open = body.style.display === 'none';
+  body.style.display = open ? 'block' : 'none';
+  document.getElementById('howToggle').innerHTML = open ? '&#9650; Cerrar guia' : '&#9660; Ver guia';
+}
+
+// api bar
+function setApiBar(estado, msg){
+  var el = document.getElementById('apiBar');
+  var ts = new Date().toLocaleTimeString('es-AR');
+  if(estado === 'loading'){
+    el.innerHTML = '<span><div class="spin"></div>Actualizando precios...</span>';
+    return;
+  }
+  var clr = estado==='ok' ? 'var(--vd)' : '#ffde59';
+  var ico = estado==='ok' ? '&#10003;' : '&#9888;';
+  el.innerHTML =
+    '<span><strong>Fuente:</strong> Google Sheets Proxy - BYMA</span>' +
+    '<span style="color:'+clr+';font-weight:600">'+ico+' '+msg+'</span>' +
+    '<span class="mu2">| '+ts+'</span>';
+  document.getElementById('statusTxt').textContent = ts;
+}
+
+// fetch sheets
+function fetchPreciosSheets(){
+  setApiBar('loading');
+  fetch(SHEETS_URL)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(!data.ok || !data.titulos) throw new Error('Respuesta invalida');
+      var live = 0, ref = 0;
+      Object.keys(data.titulos).forEach(function(ticker){
+        var vals = data.titulos[ticker];
+        var inst = INST.find(function(i){ return i.t === ticker; });
+        if(!inst || !vals.precio) return;
+        inst.precio = vals.precio;
+        if(vals.varP  !== undefined) inst.varP = vals.varP;
+        if(vals.tem   !== undefined) inst.tem  = vals.tem;
+        if(vals.tna   !== undefined) inst.tna  = vals.tna;
+        if(vals.tir   !== undefined) inst.tir  = vals.tir;
+        if(vals.vt    !== undefined) inst.vt   = vals.vt;
+        if(vals.dias  !== undefined) inst.dias = vals.dias;
+        inst._fuente = vals.fuente || 'ref';
+        vals.fuente === 'byma' ? live++ : ref++;
+      });
+      setApiBar('ok', 'Actualizado ' + data.fecha + ' - ' + live + ' BYMA - ' + ref + ' ref.');
+      renderMkt();
+      recalcular();
+    })
+    .catch(function(e){
+      setApiBar('err', 'Error: ' + e.message + ' - usando datos locales');
+    });
+}
+
+// init
+function init(){
+  onHorizonte();
+  fetchPreciosSheets();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  init();
+
+  // Refrescar precios cada 5 minutos
+  var INTERVALO = 5 * 60; // segundos
+  var restante = INTERVALO;
+
+  setInterval(function(){
+    restante--;
+    if(restante <= 0){
+      restante = INTERVALO;
+      fetchPreciosSheets();
+    }
+    // Actualizar countdown en statusTxt
+    var min = Math.floor(restante / 60);
+    var seg = restante % 60;
+    document.getElementById('statusTxt').textContent =
+      'Prox. actualizacion: ' + min + ':' + (seg < 10 ? '0' : '') + seg;
+  }, 1000);
+});
+
+</script>
+</body>
+</html>
