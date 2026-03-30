@@ -237,20 +237,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
       <div class="fg">
         <label>Horizonte / plazo (dias)</label>
         <select id="horizonte" onchange="onHorizonte()">
-          <option value="21">21 dias - comparable S17A6</option>
-          <option value="30">30 dias</option>
-          <option value="34">34 dias - comparable S30A6</option>
-          <option value="60">60 dias</option>
-          <option value="63">63 dias - comparable S29Y6</option>
-          <option value="90">90 dias</option>
-          <option value="95">95 dias - comparable T30J6</option>
-          <option value="126">126 dias - comparable S31L6</option>
-          <option value="157">157 dias - comparable S31G6</option>
-          <option value="180">180 dias</option>
-          <option value="217">217 dias - comparable S30O6</option>
-          <option value="248" selected>248 dias - comparable S30N6</option>
-          <option value="294">294 dias - comparable T15E7</option>
-          <option value="365">365 dias</option>
+          <option value="248">248 dias - comparable S30N6</option>
         </select>
       </div>
     </div>
@@ -487,7 +474,18 @@ var INST = [
   {t:'TY30P', tipo:'Bonte', venc:'2030-05-30', precio:119.500, varP:0.67,  vt:109.833, tir:27.1, tem:2.0, tna:24.2, dias:1525, _sel:false}
 ];
 
-var HORIZ_TICKER = {21:'S17A6',34:'S30A6',63:'S29Y6',95:'T30J6',126:'S31L6',157:'S31G6',217:'S30O6',248:'S30N6',294:'T15E7'};
+var HORIZ_TICKERS_VENC = [
+  {t:'S17A6', venc:'2026-04-17'},
+  {t:'S30A6', venc:'2026-04-30'},
+  {t:'S29Y6', venc:'2026-05-29'},
+  {t:'T30J6', venc:'2026-06-30'},
+  {t:'S31L6', venc:'2026-07-31'},
+  {t:'S31G6', venc:'2026-08-31'},
+  {t:'S30O6', venc:'2026-10-30'},
+  {t:'S30N6', venc:'2026-11-30'},
+  {t:'T15E7', venc:'2027-01-15'}
+];
+var HORIZ_TICKER = {};
 
 // capital
 function capFinalTitulo(inst, monto, horizDias){
@@ -841,10 +839,40 @@ function calcDias(vencStr){
   return diff > 0 ? diff : 0;
 }
 
-// Recorre INST y recalcula dias desde hoy para todos los instrumentos
+// Recorre INST, recalcula dias desde hoy, reconstruye HORIZ_TICKER y regenera el dropdown
 function actualizarDiasDesdeHoy(){
   INST.forEach(function(inst){
     inst.dias = calcDias(inst.venc);
+  });
+
+  HORIZ_TICKER = {};
+  HORIZ_TICKERS_VENC.forEach(function(item){
+    var d = calcDias(item.venc);
+    if(d > 0) HORIZ_TICKER[d] = item.t;
+  });
+
+  var sel = document.getElementById('horizonte');
+  if(!sel) return;
+  var valorActual = parseInt(sel.value) || 0;
+
+  var fijas = [30, 60, 90, 180, 365];
+  var comparables = Object.keys(HORIZ_TICKER).map(Number);
+  var todas = fijas.concat(comparables);
+  todas = todas.filter(function(v, i, a){ return a.indexOf(v) === i && v > 0; });
+  todas.sort(function(a, b){ return a - b; });
+
+  var nuevoValor = todas.reduce(function(prev, curr){
+    return Math.abs(curr - valorActual) < Math.abs(prev - valorActual) ? curr : prev;
+  }, todas[0]);
+
+  sel.innerHTML = '';
+  todas.forEach(function(d){
+    var opt = document.createElement('option');
+    opt.value = d;
+    var ticker = HORIZ_TICKER[d];
+    opt.textContent = d + ' dias' + (ticker ? ' - comparable ' + ticker : '');
+    if(d === nuevoValor) opt.selected = true;
+    sel.appendChild(opt);
   });
 }
 
