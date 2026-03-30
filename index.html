@@ -816,10 +816,10 @@ function fetchPreciosSheets(){
         if(vals.tna   !== undefined) inst.tna  = vals.tna;
         if(vals.tir   !== undefined) inst.tir  = vals.tir;
         if(vals.vt    !== undefined) inst.vt   = vals.vt;
-        if(vals.dias  !== undefined) inst.dias = vals.dias;
         inst._fuente = vals.fuente || 'ref';
         vals.fuente === 'byma' ? live++ : ref++;
       });
+      actualizarDiasDesdeHoy();
       setApiBar('ok', 'Actualizado ' + data.fecha + ' - ' + live + ' BYMA - ' + ref + ' ref.');
       renderMkt();
       recalcular();
@@ -830,7 +830,26 @@ function fetchPreciosSheets(){
 }
 
 // init
+// Calcula dias calendario desde hoy hasta la fecha de vencimiento
+function calcDias(vencStr){
+  var hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  var partes = vencStr.split('-');
+  var venc = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+  venc.setHours(0, 0, 0, 0);
+  var diff = Math.round((venc - hoy) / 86400000);
+  return diff > 0 ? diff : 0;
+}
+
+// Recorre INST y recalcula dias desde hoy para todos los instrumentos
+function actualizarDiasDesdeHoy(){
+  INST.forEach(function(inst){
+    inst.dias = calcDias(inst.venc);
+  });
+}
+
 function init(){
+  actualizarDiasDesdeHoy();
   onHorizonte();
   fetchPreciosSheets();
 }
@@ -846,6 +865,7 @@ document.addEventListener('DOMContentLoaded', function(){
     restante--;
     if(restante <= 0){
       restante = INTERVALO;
+      actualizarDiasDesdeHoy();
       fetchPreciosSheets();
     }
     // Actualizar countdown en statusTxt
