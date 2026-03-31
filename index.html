@@ -92,6 +92,8 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 .tBT{background:rgba(255,222,89,.38);color:#7a6200;}
 .tBN{background:rgba(147,213,0,.18);color:#3a5500;}
 .tPF{background:var(--gc);color:var(--gt);}
+.tCAP{background:rgba(180,100,220,.15);color:#5a0080;}
+.tPUT{background:rgba(230,101,101,.15);color:#8b2020;}
 .vup{color:#3a5500;font-weight:600;}
 .vdn{color:#8b2020;font-weight:600;}
 .mono{font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;}
@@ -101,7 +103,6 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 .cc{width:32px;}
 .cc input[type=checkbox]{width:14px;height:14px;accent-color:var(--vd);cursor:pointer;}
 .ft-bon{background:rgba(147,213,0,.13);color:#3a5500;font-size:9px;padding:1px 5px;border-radius:2px;}
-.ft-live{background:rgba(68,114,196,.15);color:#2a4a8a;font-size:9px;padding:1px 5px;border-radius:2px;}
 .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px;align-items:center;}
 .fb{padding:4px 11px;border-radius:var(--r);font-size:10px;font-weight:700;font-family:'Montserrat',sans-serif;background:var(--gc);border:none;color:var(--gt);cursor:pointer;text-transform:uppercase;}
 .fb.active{background:var(--vd);color:var(--az);}
@@ -151,8 +152,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 .footer{background:var(--az);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
 .fd{font-size:11px;color:rgba(255,255,255,.36);line-height:1.5;max-width:740px;}
 .fb2{font-family:'Montserrat',sans-serif;font-size:11px;color:var(--vd);font-weight:700;text-align:right;white-space:nowrap;margin-left:18px;}
-.spin{display:inline-block;width:10px;height:10px;border:2px solid rgba(147,213,0,.25);border-top-color:var(--vd);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:4px;}
-@keyframes spin{to{transform:rotate(360deg)}}
+.upd-badge{background:rgba(147,213,0,.13);border:1px solid rgba(147,213,0,.25);color:var(--vd);padding:3px 9px;border-radius:var(--r);font-size:10px;font-weight:700;font-family:'Montserrat',sans-serif;}
 @media(max-width:900px){.g3{grid-template-columns:1fr 1fr;}}
 @media(max-width:720px){.g3{grid-template-columns:1fr;}.g4{grid-template-columns:1fr 1fr;}.page{padding:13px 10px 32px;}.how-steps{grid-template-columns:1fr;}}
 </style>
@@ -167,8 +167,8 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
   </div>
   <div class="tr2">
     <div class="ldot"></div>
-    <span class="ltxt" id="statusTxt">Cargando...</span>
-    <button class="rb" onclick="init()">&#8635; Actualizar</button>
+    <span class="ltxt" id="statusTxt">Datos al 31/03/2026</span>
+    <span class="upd-badge">Bonistas 31/03/2026</span>
   </div>
 </div>
 
@@ -176,7 +176,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 
 <div class="ph">
   <div class="tw"><span class="thl">Simulador</span><span class="tmn">de inversiones<span class="tdot">.</span></span></div>
-  <div class="psub">Lecaps - Boncaps - Bote - Bonte | Datos Bonistas.com | TIR/TEM/TNA identicas a Bonistas</div>
+  <div class="psub">Lecaps · Boncaps · Bote · Bonte · CAPs · PUT | Datos Bonistas.com 31/03/2026 | TIR/TEM/TNA idénticas a Bonistas</div>
 </div>
 
 <!-- HOW TO -->
@@ -185,59 +185,59 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
     <div class="how-header" onclick="toggleHow()">
       <div style="display:flex;align-items:center;gap:10px;">
         <div style="background:var(--vd);width:6px;height:24px;border-radius:2px;flex-shrink:0;"></div>
-        <span class="how-title">Como usar este simulador?</span>
+        <span class="how-title">¿Cómo usar este simulador?</span>
       </div>
-      <span class="how-toggle" id="howToggle">&#9660; Ver guia</span>
+      <span class="how-toggle" id="howToggle">&#9660; Ver guía</span>
     </div>
     <div class="how-body" id="howBody" style="display:none;">
       <div class="how-steps">
-        <div class="how-step"><div class="how-num">1</div><div class="how-text"><strong>Ingresa tu monto</strong> - el capital que queres invertir en pesos.</div></div>
-        <div class="how-step"><div class="how-num">2</div><div class="how-text"><strong>Elegi el horizonte</strong> - los plazos especiales corresponden al vencimiento exacto de un titulo. Al seleccionarlos, el instrumento comparable se tilda automaticamente.</div></div>
-        <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>Selecciona tu banco</strong> - se carga la TNA vigente del Plazo Fijo (BCRA Mar 2026).</div></div>
-        <div class="how-step"><div class="how-num">4</div><div class="how-text"><strong>Elegi la categoria del cliente</strong> - Estandar (1.20%) o Preferente (1.00%). Las comisiones se descuentan del capital final.</div></div>
-        <div class="how-step"><div class="how-num">5</div><div class="how-text"><strong>Revisa la comparativa automatica</strong> - muestra instrumentos con vencimiento +-10 dias de tu horizonte vs el PF.</div></div>
-        <div class="how-step"><div class="how-num">6</div><div class="how-text"><strong>Selecciona tickers manualmente</strong> - con los checkboxes en la tabla de mercado podes comparar cualquier instrumento.</div></div>
+        <div class="how-step"><div class="how-num">1</div><div class="how-text"><strong>Ingresá tu monto</strong> — el capital que querés invertir en pesos.</div></div>
+        <div class="how-step"><div class="how-num">2</div><div class="how-text"><strong>Elegí el horizonte</strong> — los plazos especiales corresponden al vencimiento exacto de un título.</div></div>
+        <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>Seleccioná tu banco</strong> — se carga la TNA vigente del Plazo Fijo (BCRA Mar 2026).</div></div>
+        <div class="how-step"><div class="how-num">4</div><div class="how-text"><strong>Elegí la categoría del cliente</strong> — Estándar (1.20%) o Preferente (1.00%). Las comisiones se descuentan del capital final.</div></div>
+        <div class="how-step"><div class="how-num">5</div><div class="how-text"><strong>Revisá la comparativa automática</strong> — muestra instrumentos con vencimiento ±10 días de tu horizonte vs el PF.</div></div>
+        <div class="how-step"><div class="how-num">6</div><div class="how-text"><strong>Seleccioná tickers manualmente</strong> — con los checkboxes en la tabla de mercado podés comparar cualquier instrumento.</div></div>
       </div>
       <div class="how-glosario">
-        <div class="how-g-title">Glosario rapido</div>
+        <div class="how-g-title">Glosario rápido</div>
         <div class="how-g-row"><span class="how-g-key">TIR</span><span class="how-g-val">Tasa Interna de Retorno anual efectiva.</span></div>
-        <div class="how-g-row"><span class="how-g-key">TEM</span><span class="how-g-val">Tasa Efectiva Mensual - cuanto rinde cada 30 dias.</span></div>
-        <div class="how-g-row"><span class="how-g-key">TNA</span><span class="how-g-val">Tasa Nominal Anual - TEM x 12.</span></div>
-        <div class="how-g-row"><span class="how-g-key">VT</span><span class="how-g-val">Valor Tecnico - precio de rescate al vencimiento por cada $100 VN.</span></div>
-        <div class="how-g-row"><span class="how-g-key">Lecap</span><span class="how-g-val">Letra de capitalizacion del Tesoro. Sin cupones, paga VT al vencer.</span></div>
-        <div class="how-g-row"><span class="how-g-key">Boncap</span><span class="how-g-val">Bono de capitalizacion del Tesoro. Mayor plazo que Lecap.</span></div>
-        <div class="how-g-row"><span class="how-g-key">Bote/Bonte</span><span class="how-g-val">Bonos del Tesoro con cupones periodicos.</span></div>
+        <div class="how-g-row"><span class="how-g-key">TEM</span><span class="how-g-val">Tasa Efectiva Mensual — cuánto rinde cada 30 días.</span></div>
+        <div class="how-g-row"><span class="how-g-key">TNA</span><span class="how-g-val">Tasa Nominal Anual — TEM × 12.</span></div>
+        <div class="how-g-row"><span class="how-g-key">VT</span><span class="how-g-val">Valor Técnico — precio de rescate al vencimiento por cada $100 VN.</span></div>
+        <div class="how-g-row"><span class="how-g-key">MD</span><span class="how-g-val">Modified Duration — sensibilidad del precio a cambios en tasas.</span></div>
       </div>
-      <div class="how-footer">Datos: Bonistas.com | Tasas bancarias: BCRA Mar 2026</div>
+      <div class="how-footer">Datos: Bonistas.com 31/03/2026 | Tasas bancarias: BCRA Mar 2026</div>
     </div>
   </div>
 </div>
 
 <div class="api-bar" id="apiBar">
-  <span><div class="spin"></div>Iniciando...</span>
+  <span>&#9679; <strong>Fuente:</strong> Bonistas.com</span>
+  <span class="ok">&#10003; Datos al 31/03/2026</span>
+  <span class="mu2">| 19 instrumentos cargados</span>
 </div>
 
 <div class="nota">
-  <strong>Metodologia identica a Bonistas.com:</strong>
-  TEM = tasa efectiva mensual implicita en precio vs VT. TNA = TEM x 12. TIR = (1+TEM)^12 - 1.
-  <strong>Comisiones S&amp;C:</strong> MAX(Monto x Arancel% x dias/365 , $100) + Nominales x 0.0001
+  <strong>Metodología idéntica a Bonistas.com:</strong>
+  TEM = tasa efectiva mensual implícita en precio vs VT. TNA = TEM × 12. TIR = (1+TEM)^12 − 1.
+  <strong>Comisiones S&amp;C:</strong> MAX(Monto × Arancel% × días/365 , $100) + Nominales × 0.0001
 </div>
 
 <!-- PARAMETROS -->
 <div class="sec">
-  <div class="sl"><span class="ar">&#8594;</span> Parametros de inversion</div>
+  <div class="sl"><span class="ar">&#8594;</span> Parámetros de inversión</div>
   <div class="g3">
 
     <div class="card">
-      <div class="ct"><span class="dot"></span> Tu inversion</div>
+      <div class="ct"><span class="dot"></span> Tu inversión</div>
       <div class="fg">
         <label>Monto (ARS)</label>
         <div class="rel"><span class="pfx">$</span><input type="number" id="monto" value="1000000" min="1000" step="10000" oninput="actualizarPill();recalcular()"></div>
       </div>
       <div class="fg">
-        <label>Horizonte / plazo (dias)</label>
+        <label>Horizonte / plazo (días)</label>
         <select id="horizonte" onchange="onHorizonte()">
-          <option value="248">248 dias - comparable S30N6</option>
+          <option value="244">244 días - comparable S30N6</option>
         </select>
       </div>
     </div>
@@ -245,9 +245,9 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
     <div class="card">
       <div class="ct"><span class="dot"></span> Comisiones S&amp;C</div>
       <div class="fg">
-        <label>Categoria del cliente</label>
+        <label>Categoría del cliente</label>
         <select id="catCliente" onchange="onCategoria()">
-          <option value="estandar">Estandar - Arancel 1.20%</option>
+          <option value="estandar">Estándar - Arancel 1.20%</option>
           <option value="preferente">Preferente - Arancel 1.00%</option>
           <option value="personalizada">Personalizada</option>
         </select>
@@ -269,13 +269,13 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
     <div class="card">
       <div class="ct"><span class="dot"></span> Plazo Fijo</div>
       <div class="fg">
-        <label>En que banco sos cliente?</label>
+        <label>¿En qué banco sos cliente?</label>
         <div class="bsw">
           <select id="bancoSel" onchange="onBanco()">
-            <option value="">- Selecciona tu banco -</option>
+            <option value="">- Seleccioná tu banco -</option>
             <optgroup label="Grandes bancos">
               <option value="macro">Banco Macro</option>
-              <option value="nacion">Banco Nacion Argentina</option>
+              <option value="nacion">Banco Nación Argentina</option>
               <option value="provincia">Banco Provincia de Bs. As.</option>
               <option value="credicoop">Banco Credicoop</option>
               <option value="bbva">Banco BBVA Argentina</option>
@@ -286,7 +286,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
               <option value="hsbc">Banco HSBC</option>
             </optgroup>
             <optgroup label="Bancos medianos">
-              <option value="cordoba">Banco de Cordoba</option>
+              <option value="cordoba">Banco de Córdoba</option>
               <option value="hipotecario">Banco Hipotecario</option>
               <option value="supervielle">Banco Supervielle</option>
               <option value="patagonia">Banco Patagonia</option>
@@ -313,9 +313,9 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
         <div class="rel"><input type="number" id="tna_m" value="28" min="0" max="500" step="0.5" class="sf" oninput="recalcular()"><span class="sfx">%</span></div>
       </div>
       <div class="fg">
-        <label>Renovacion</label>
+        <label>Renovación</label>
         <select id="renov" onchange="recalcular()">
-          <option value="automatica">Automatica (capitaliza)</option>
+          <option value="automatica">Automática (capitaliza)</option>
           <option value="manual">Manual (retiro intereses)</option>
         </select>
       </div>
@@ -326,13 +326,15 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 
 <!-- MERCADO -->
 <div class="sec">
-  <div class="sl"><span class="ar">&#8594;</span> Mercado - todos los instrumentos - Bonistas.com</div>
+  <div class="sl"><span class="ar">&#8594;</span> Mercado — todos los instrumentos — Bonistas.com 31/03/2026</div>
   <div class="filter-row">
     <button class="fb active" onclick="setF('todos',this)">Todos</button>
     <button class="fb" onclick="setF('Lecap',this)">Lecap</button>
     <button class="fb" onclick="setF('Boncap',this)">Boncap</button>
     <button class="fb" onclick="setF('Bote',this)">Bote</button>
     <button class="fb" onclick="setF('Bonte',this)">Bonte</button>
+    <button class="fb" onclick="setF('CAP',this)">CAP</button>
+    <button class="fb" onclick="setF('PUT',this)">PUT</button>
     <input type="text" class="si" id="search" placeholder="Buscar ticker..." oninput="renderMkt()">
   </div>
   <div class="mkt-wrap">
@@ -344,12 +346,11 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
         <th onclick="sortBy('venc')">Vencimiento <span class="sort-ic" id="si-venc">&#8645;</span></th>
         <th class="r" onclick="sortBy('precio')">Precio <span class="sort-ic" id="si-precio">&#8645;</span></th>
         <th class="r" onclick="sortBy('vt')">VT <span class="sort-ic" id="si-vt">&#8645;</span></th>
-        <th class="r" onclick="sortBy('var')">Var% <span class="sort-ic" id="si-var">&#8645;</span></th>
+        <th class="r" onclick="sortBy('var')">Dif% <span class="sort-ic" id="si-var">&#8645;</span></th>
         <th class="r" onclick="sortBy('tir')">TIR <span class="sort-ic" id="si-tir">&#8645;</span></th>
         <th class="r" onclick="sortBy('tem')">TEM <span class="sort-ic" id="si-tem">&#8645;</span></th>
         <th class="r" onclick="sortBy('tna')">TNA <span class="sort-ic" id="si-tna">&#8645;</span></th>
-        <th class="r" onclick="sortBy('dias')">Dias <span class="sort-ic" id="si-dias">&#8645;</span></th>
-        <th>Fuente</th>
+        <th class="r" onclick="sortBy('dias')">Días <span class="sort-ic" id="si-dias">&#8645;</span></th>
       </tr></thead>
       <tbody id="mktBody"></tbody>
     </table>
@@ -359,12 +360,12 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 <div id="alertaDiv"></div>
 
 <div class="sec">
-  <div class="sl"><span class="ar">&#8594;</span> Comparativa automatica - vencimiento +-10 dias del horizonte</div>
+  <div class="sl"><span class="ar">&#8594;</span> Comparativa automática — vencimiento ±10 días del horizonte</div>
   <div id="autoCompare"></div>
 </div>
 
 <div class="sec">
-  <div class="sl"><span class="ar">&#8594;</span> Capital final - seleccionados vs Plazo Fijo</div>
+  <div class="sl"><span class="ar">&#8594;</span> Capital final — seleccionados vs Plazo Fijo</div>
   <div class="g4" id="metricasGrid"></div>
 </div>
 
@@ -376,7 +377,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
         <th>Instrumento</th><th>Tipo</th>
         <th class="r">Precio</th><th class="r">VT</th>
         <th class="r">TIR</th><th class="r">TEM</th><th class="r">TNA</th>
-        <th class="r">Dias</th><th class="r">Bruto</th><th class="r">Comision</th><th class="r">Capital neto</th><th class="r">Ganancia</th><th class="r">vs. PF</th>
+        <th class="r">Días</th><th class="r">Bruto</th><th class="r">Comisión</th><th class="r">Capital neto</th><th class="r">Ganancia</th><th class="r">vs. PF</th>
       </tr></thead>
       <tbody id="resBody"></tbody>
     </table>
@@ -384,7 +385,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 </div>
 
 <div class="sec">
-  <div class="sl"><span class="ar">&#8594;</span> Evolucion del capital</div>
+  <div class="sl"><span class="ar">&#8594;</span> Evolución del capital</div>
   <div class="chart-card">
     <div class="ctop">
       <span class="cttl">Crecimiento del capital proyectado (neto de comisiones)</span>
@@ -401,334 +402,373 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 </div>
 
 <div class="footer">
-  <div class="fd"><strong style="color:rgba(255,255,255,.58)">Aviso legal:</strong> Simulador informativo. Precios y tasas segun Bonistas.com. Tasas PF segun BCRA Mar 2026. Comisiones segun planilla S&amp;C Inversiones. Consulta a tu asesor antes de invertir.</div>
+  <div class="fd"><strong style="color:rgba(255,255,255,.58)">Aviso legal:</strong> Simulador informativo. Precios y tasas según Bonistas.com al 31/03/2026. Tasas PF según BCRA Mar 2026. Comisiones según planilla S&amp;C Inversiones. Consultá a tu asesor antes de invertir.</div>
   <div class="fb2">S&amp;C Inversiones S.A.<br><span style="font-weight:300;color:rgba(255,255,255,.32);font-family:'Inter'">www.sycinversiones.com</span></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 
-var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwX-MhXsDiMO_z55Ac1j1mQemPqxb9sbN0HfwPAmtSV3rr7VMeTjBGOT_1YsWqqmRGTtw/exec';
+// ── DATOS BONISTAS 31/03/2026 ────────────────────────────────────────
+// Fuente: captura bonistas.com 31/03/2026
+var INST = [
+  // LECAPS
+  {t:'S17A6',  tipo:'Lecap',  venc:'2026-04-17', precio:108.830, varP:0.00, vt:108.797, tir:31.0, tem:2.3, tna:27.3, dias:17,  _sel:false},
+  {t:'S30A6',  tipo:'Lecap',  venc:'2026-04-30', precio:124.920, varP:0.00, vt:123.691, tir:29.2, tem:2.2, tna:25.9, dias:30,  _sel:false},
+  {t:'S29Y6',  tipo:'Lecap',  venc:'2026-05-29', precio:126.701, varP:0.00, vt:126.867, tir:29.7, tem:2.2, tna:26.3, dias:59,  _sel:false},
+  {t:'S31L6',  tipo:'Lecap',  venc:'2026-07-31', precio:109.000, varP:0.00, vt:105.990, tir:26.0, tem:1.9, tna:23.3, dias:122, _sel:false},
+  {t:'S31G6',  tipo:'Lecap',  venc:'2026-08-31', precio:113.880, varP:0.00, vt:113.113, tir:30.1, tem:2.2, tna:26.6, dias:153, _sel:false},
+  {t:'S30O6',  tipo:'Lecap',  venc:'2026-10-30', precio:115.719, varP:0.00, vt:114.797, tir:30.8, tem:2.3, tna:27.2, dias:213, _sel:false},
+  {t:'S30N6',  tipo:'Lecap',  venc:'2026-11-30', precio:108.651, varP:0.00, vt:109.183, tir:30.8, tem:2.3, tna:27.1, dias:244, _sel:false},
+  // BONCAPS
+  {t:'T30J6',  tipo:'Boncap', venc:'2026-06-30', precio:135.700, varP:0.00, vt:137.256, tir:30.5, tem:2.2, tna:26.9, dias:91,  _sel:false},
+  {t:'T15E7',  tipo:'Boncap', venc:'2027-01-15', precio:129.800, varP:0.00, vt:136.489, tir:31.4, tem:2.3, tna:27.6, dias:290, _sel:false},
+  {t:'T30A7',  tipo:'Boncap', venc:'2027-04-30', precio:117.300, varP:0.00, vt:116.034, tir:31.3, tem:2.3, tna:27.5, dias:395, _sel:false},
+  {t:'T31Y7',  tipo:'Boncap', venc:'2027-05-31', precio:110.350, varP:0.00, vt:110.391, tir:31.3, tem:2.3, tna:27.6, dias:426, _sel:false},
+  {t:'T30J7',  tipo:'Boncap', venc:'2027-06-30', precio:112.900, varP:0.00, vt:108.021, tir:29.6, tem:2.2, tna:26.2, dias:456, _sel:false},
+  // BOTE
+  {t:'TO26',   tipo:'Bote',   venc:'2026-10-17', precio:100.800, varP:0.00, vt:107.061, tir:30.3, tem:2.2, tna:26.8, dias:17,  _sel:false},
+  // BONTE
+  {t:'TY30P',  tipo:'Bonte',  venc:'2030-05-30', precio:118.400, varP:0.00, vt:109.915, tir:27.7, tem:2.1, tna:24.7, dias:1520,_sel:false},
+  // CAPs
+  {t:'TTJ26_CAP', tipo:'CAP', venc:'2026-06-30', precio:152.600, varP:0.00, vt:136.856, tir:-19.6,tem:-1.8,tna:-21.6,dias:91,  _sel:false},
+  {t:'TTS26_CAP', tipo:'CAP', venc:'2026-09-30', precio:151.500, varP:0.00, vt:137.516, tir:0.9,  tem:0.1, tna:0.9,  dias:168, _sel:false},
+  {t:'TTD26_CAP', tipo:'CAP', venc:'2026-12-31', precio:150.300, varP:0.00, vt:138.170, tir:10.4, tem:0.8, tna:9.9,  dias:259, _sel:false},
+  // PUT
+  {t:'TY30P_PUT',tipo:'PUT',  venc:'2030-05-30', precio:118.400, varP:0.00, vt:109.915, tir:21.8, tem:1.7, tna:19.9, dias:424, _sel:false},
+];
+
+var HORIZ_TICKERS_VENC = [
+  {t:'S17A6',  venc:'2026-04-17'},
+  {t:'S30A6',  venc:'2026-04-30'},
+  {t:'S29Y6',  venc:'2026-05-29'},
+  {t:'T30J6',  venc:'2026-06-30'},
+  {t:'S31L6',  venc:'2026-07-31'},
+  {t:'S31G6',  venc:'2026-08-31'},
+  {t:'S30O6',  venc:'2026-10-30'},
+  {t:'S30N6',  venc:'2026-11-30'},
+  {t:'T15E7',  venc:'2027-01-15'},
+  {t:'T30A7',  venc:'2027-04-30'},
+  {t:'T31Y7',  venc:'2027-05-31'},
+  {t:'T30J7',  venc:'2027-06-30'},
+];
+var HORIZ_TICKER = {};
 
 // helpers
 function fa(v){ return '$' + Math.round(v).toLocaleString('es-AR'); }
-function fp(v,d){ d = d || 2; return v.toFixed(d) + '%'; }
+function fp(v,d){ d = d||2; return v.toFixed(d)+'%'; }
 
 // bancos
 var BTNA = {macro:28,nacion:25,provincia:25,credicoop:24,bbva:24,santander:23,galicia:23,ciudad:23,icbc:23.5,hsbc:22,cordoba:25,hipotecario:23.5,supervielle:22,patagonia:22,comafi:23,chubut:23.5,cmf:29,meridian:28,voii:28,julio:27,bibank:27};
-var BN = {macro:'Banco Macro',nacion:'Banco Nacion',provincia:'Banco Provincia',credicoop:'Banco Credicoop',bbva:'Banco BBVA',santander:'Banco Santander',galicia:'Banco Galicia',ciudad:'Banco Ciudad',icbc:'Banco ICBC',hsbc:'Banco HSBC',cordoba:'Banco de Cordoba',hipotecario:'Banco Hipotecario',supervielle:'Banco Supervielle',patagonia:'Banco Patagonia',comafi:'Banco Comafi',chubut:'Banco del Chubut',cmf:'Banco CMF',meridian:'Banco Meridian',voii:'Banco Voii',julio:'Banco Julio',bibank:'Bibank'};
+var BN   = {macro:'Banco Macro',nacion:'Banco Nación',provincia:'Banco Provincia',credicoop:'Banco Credicoop',bbva:'Banco BBVA',santander:'Banco Santander',galicia:'Banco Galicia',ciudad:'Banco Ciudad',icbc:'Banco ICBC',hsbc:'Banco HSBC',cordoba:'Banco de Córdoba',hipotecario:'Banco Hipotecario',supervielle:'Banco Supervielle',patagonia:'Banco Patagonia',comafi:'Banco Comafi',chubut:'Banco del Chubut',cmf:'Banco CMF',meridian:'Banco Meridian',voii:'Banco Voii',julio:'Banco Julio',bibank:'Bibank'};
 
-// comisiones
 var ARANCEL = {estandar:1.20, preferente:1.00};
 
 function getArancel(){
   var cat = document.getElementById('catCliente').value;
-  if(cat === 'personalizada') return parseFloat(document.getElementById('comisionCustom').value) || 0;
+  if(cat==='personalizada') return parseFloat(document.getElementById('comisionCustom').value)||0;
   return ARANCEL[cat];
 }
 
 function costoTotal(monto, dias, precio){
   var arancel = getArancel();
-  var p = (precio && precio > 0) ? precio : 100;
-  var nominales = Math.floor(monto / p * 100);
-  var cArancel = Math.max((monto * arancel / 100) * dias / 365, 100);
-  var cMcdo = nominales * 0.0001;
+  var p = (precio && precio>0) ? precio : 100;
+  var nominales = Math.floor(monto/p*100);
+  var cArancel  = Math.max((monto*arancel/100)*dias/365, 100);
+  var cMcdo     = nominales*0.0001;
   return cArancel + cMcdo;
 }
 
 function actualizarPill(){
   var arancel = getArancel();
-  var cat = document.getElementById('catCliente').value;
-  var monto = parseFloat(document.getElementById('monto').value) || 1000000;
-  var dias = parseInt(document.getElementById('horizonte').value) || 30;
+  var cat   = document.getElementById('catCliente').value;
+  var monto = parseFloat(document.getElementById('monto').value)||1000000;
+  var dias  = parseInt(document.getElementById('horizonte').value)||30;
   var costo = costoTotal(monto, dias, 100);
-  var lbl = cat === 'estandar' ? 'Estandar' : cat === 'preferente' ? 'Preferente' : 'Personalizada';
+  var lbl   = cat==='estandar'?'Estándar':cat==='preferente'?'Preferente':'Personalizada';
   document.getElementById('comPill').innerHTML =
-    '<strong>' + lbl + '</strong> - Arancel: <strong>' + arancel.toFixed(2) + '% anual</strong><br>' +
-    'D.Mcdo: Nominales x 0.01% - ' +
-    'Costo est. ' + dias + 'd: <strong style="color:#8b2020">-' + fa(costo) + '</strong>';
+    '<strong>'+lbl+'</strong> — Arancel: <strong>'+arancel.toFixed(2)+'% anual</strong><br>'+
+    'D.Mcdo: Nominales × 0.01% — '+
+    'Costo est. '+dias+'d: <strong style="color:#8b2020">-'+fa(costo)+'</strong>';
 }
 
 function onCategoria(){
   document.getElementById('comisionWrap').style.display =
-    document.getElementById('catCliente').value === 'personalizada' ? '' : 'none';
-  actualizarPill();
-  recalcular();
+    document.getElementById('catCliente').value==='personalizada'?'':'none';
+  actualizarPill(); recalcular();
 }
-
-// instrumentos
-var INST = [
-  {t:'S17A6', tipo:'Lecap', venc:'2026-04-17', precio:108.785, varP:0.16,  vt:108.714, tir:28.2, tem:2.1, tna:25.1, dias:21,   _sel:false},
-  {t:'S30A6', tipo:'Lecap', venc:'2026-04-30', precio:124.899, varP:0.16,  vt:123.560, tir:27.3, tem:2.0, tna:24.4, dias:34,   _sel:false},
-  {t:'S29Y6', tipo:'Lecap', venc:'2026-05-29', precio:126.799, varP:0.13,  vt:126.778, tir:28.0, tem:2.1, tna:24.9, dias:63,   _sel:false},
-  {t:'S31L6', tipo:'Lecap', venc:'2026-07-31', precio:108.161, varP:0.01,  vt:105.892, tir:28.4, tem:2.1, tna:25.3, dias:126,  _sel:false},
-  {t:'S31G6', tipo:'Lecap', venc:'2026-08-31', precio:114.207, varP:-0.02, vt:113.020, tir:28.8, tem:2.1, tna:25.6, dias:157,  _sel:false},
-  {t:'S30O6', tipo:'Lecap', venc:'2026-10-30', precio:115.990, varP:0.25,  vt:114.699, tir:30.0, tem:2.2, tna:26.5, dias:217,  _sel:false},
-  {t:'S30N6', tipo:'Lecap', venc:'2026-11-30', precio:109.126, varP:0.59,  vt:109.096, tir:29.6, tem:2.2, tna:26.2, dias:248,  _sel:false},
-  {t:'T30J6', tipo:'Boncap',venc:'2026-06-30', precio:136.000, varP:0.22,  vt:137.170, tir:28.6, tem:2.1, tna:25.4, dias:95,   _sel:false},
-  {t:'T15E7', tipo:'Boncap',venc:'2027-01-15', precio:130.500, varP:0.31,  vt:136.402, tir:30.2, tem:2.2, tna:26.7, dias:294,  _sel:false},
-  {t:'T30A7', tipo:'Boncap',venc:'2027-04-30', precio:118.300, varP:0.25,  vt:115.928, tir:30.1, tem:2.2, tna:26.6, dias:399,  _sel:false},
-  {t:'T31Y7', tipo:'Boncap',venc:'2027-05-31', precio:111.850, varP:0.77,  vt:110.293, tir:29.7, tem:2.2, tna:26.3, dias:430,  _sel:false},
-  {t:'T30J7', tipo:'Boncap',venc:'2027-06-30', precio:112.850, varP:-1.01, vt:107.914, tir:29.5, tem:2.2, tna:26.2, dias:460,  _sel:false},
-  {t:'TO26',  tipo:'Bote',  venc:'2026-10-17', precio:100.100, varP:-0.10, vt:107.018, tir:31.7, tem:2.3, tna:27.8, dias:204,  _sel:false},
-  {t:'TY30P', tipo:'Bonte', venc:'2030-05-30', precio:119.500, varP:0.67,  vt:109.833, tir:27.1, tem:2.0, tna:24.2, dias:1525, _sel:false}
-];
-
-var HORIZ_TICKERS_VENC = [
-  {t:'S17A6', venc:'2026-04-17'},
-  {t:'S30A6', venc:'2026-04-30'},
-  {t:'S29Y6', venc:'2026-05-29'},
-  {t:'T30J6', venc:'2026-06-30'},
-  {t:'S31L6', venc:'2026-07-31'},
-  {t:'S31G6', venc:'2026-08-31'},
-  {t:'S30O6', venc:'2026-10-30'},
-  {t:'S30N6', venc:'2026-11-30'},
-  {t:'T15E7', venc:'2027-01-15'}
-];
-var HORIZ_TICKER = {};
 
 // capital
 function capFinalTitulo(inst, monto, horizDias){
-  var tem = inst.tem / 100;
+  var tem    = inst.tem/100;
   var diasEf = Math.min(horizDias, inst.dias);
-  var mesesEf = diasEf / 30;
-  var bruto = monto * Math.pow(1 + tem, mesesEf);
-  var costo = costoTotal(monto, diasEf, inst.precio);
-  return {neto: bruto - costo, bruto: bruto, costo: costo};
+  var mesesEf= diasEf/30;
+  var bruto  = monto*Math.pow(1+tem, mesesEf);
+  var costo  = costoTotal(monto, diasEf, inst.precio);
+  return {neto:bruto-costo, bruto:bruto, costo:costo};
 }
 
 function capPF(monto, horiz, tna, renov){
-  if(renov === 'automatica'){
-    var p = Math.floor(horiz/30), r = horiz%30, c = monto;
-    for(var i=0;i<p;i++) c *= (1 + tna*30/365);
-    if(r>0) c *= (1 + tna*r/365);
+  if(renov==='automatica'){
+    var p=Math.floor(horiz/30), r=horiz%30, c=monto;
+    for(var i=0;i<p;i++) c*=(1+tna*30/365);
+    if(r>0) c*=(1+tna*r/365);
     return c;
   }
-  return monto * (1 + tna*horiz/365);
+  return monto*(1+tna*horiz/365);
 }
 
 // banco
 function onBanco(){
-  var sel = document.getElementById('bancoSel').value;
+  var sel  = document.getElementById('bancoSel').value;
   var pill = document.getElementById('bancoPill');
-  var tw = document.getElementById('tnaWrap');
-  if(sel && sel !== 'otro' && BTNA[sel]){
+  var tw   = document.getElementById('tnaWrap');
+  if(sel && sel!=='otro' && BTNA[sel]){
     document.getElementById('pillN').textContent = BN[sel];
-    document.getElementById('pillT').textContent = BTNA[sel] + '% TNA';
-    pill.classList.add('show'); tw.style.display = 'none';
+    document.getElementById('pillT').textContent = BTNA[sel]+'% TNA';
+    pill.classList.add('show'); tw.style.display='none';
   } else {
-    pill.classList.remove('show'); tw.style.display = '';
+    pill.classList.remove('show'); tw.style.display='';
   }
   recalcular();
 }
 function getTNA(){
   var sel = document.getElementById('bancoSel').value;
-  if(sel && sel !== 'otro' && BTNA[sel]) return BTNA[sel]/100;
+  if(sel && sel!=='otro' && BTNA[sel]) return BTNA[sel]/100;
   return (parseFloat(document.getElementById('tna_m').value)||28)/100;
 }
 function getPFLabel(){
   var sel = document.getElementById('bancoSel').value;
-  if(sel && sel !== 'otro' && BN[sel]) return 'PF ' + BN[sel];
+  if(sel && sel!=='otro' && BN[sel]) return 'PF '+BN[sel];
   return 'Plazo Fijo';
+}
+
+// días
+function calcDias(vencStr){
+  var hoy = new Date(); hoy.setHours(0,0,0,0);
+  var p   = vencStr.split('-');
+  var v   = new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2])); v.setHours(0,0,0,0);
+  var d   = Math.round((v-hoy)/86400000);
+  return d>0?d:0;
+}
+
+function actualizarDiasDesdeHoy(){
+  INST.forEach(function(inst){ inst.dias = calcDias(inst.venc); });
+  HORIZ_TICKER = {};
+  HORIZ_TICKERS_VENC.forEach(function(item){
+    var d = calcDias(item.venc);
+    if(d>0) HORIZ_TICKER[d] = item.t;
+  });
+  var sel = document.getElementById('horizonte');
+  if(!sel) return;
+  var valorActual = parseInt(sel.value)||0;
+  var fijas = [30,60,90,180,365];
+  var comparables = Object.keys(HORIZ_TICKER).map(Number);
+  var todas = fijas.concat(comparables).filter(function(v,i,a){ return a.indexOf(v)===i && v>0; });
+  todas.sort(function(a,b){ return a-b; });
+  var nuevoValor = todas.reduce(function(prev,curr){
+    return Math.abs(curr-valorActual)<Math.abs(prev-valorActual)?curr:prev;
+  }, todas[0]);
+  sel.innerHTML='';
+  todas.forEach(function(d){
+    var opt = document.createElement('option');
+    opt.value = d;
+    var ticker = HORIZ_TICKER[d];
+    opt.textContent = d+' días'+(ticker?' — comparable '+ticker:'');
+    if(d===nuevoValor) opt.selected=true;
+    sel.appendChild(opt);
+  });
 }
 
 // horizonte
 function onHorizonte(){
-  INST.forEach(function(i){ i._sel = false; });
-  var h = parseInt(document.getElementById('horizonte').value);
+  INST.forEach(function(i){ i._sel=false; });
+  var h  = parseInt(document.getElementById('horizonte').value);
   var tk = HORIZ_TICKER[h];
-  if(tk){ var inst = INST.find(function(i){ return i.t === tk; }); if(inst) inst._sel = true; }
-  actualizarPill();
-  renderMkt();
-  recalcular();
+  if(tk){ var inst=INST.find(function(i){ return i.t===tk; }); if(inst) inst._sel=true; }
+  actualizarPill(); renderMkt(); recalcular();
 }
 
 // tabla mercado
-var filtro = 'todos', sortCol = 'dias', sortAsc = true;
+var filtro='todos', sortCol='dias', sortAsc=true;
 function setF(f,btn){
-  filtro = f;
+  filtro=f;
   document.querySelectorAll('.fb').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
   renderMkt();
 }
 function sortBy(col){
-  if(sortCol === col) sortAsc = !sortAsc; else { sortCol = col; sortAsc = true; }
-  document.querySelectorAll('[id^=si-]').forEach(function(el){ el.innerHTML = '&#8645;'; });
+  if(sortCol===col) sortAsc=!sortAsc; else { sortCol=col; sortAsc=true; }
+  document.querySelectorAll('[id^=si-]').forEach(function(el){ el.innerHTML='&#8645;'; });
   var ic = document.getElementById('si-'+col);
-  if(ic) ic.innerHTML = sortAsc ? '&#8593;' : '&#8595;';
+  if(ic) ic.innerHTML = sortAsc?'&#8593;':'&#8595;';
   renderMkt();
 }
+
+function tipoTag(tipo){
+  var map = {Lecap:'tL',Boncap:'tB',Bote:'tBT',Bonte:'tBN',CAP:'tCAP',PUT:'tPUT'};
+  return map[tipo]||'tL';
+}
+
 function renderMkt(){
   var search = document.getElementById('search').value.toLowerCase();
-  var tc = {Lecap:'tL',Boncap:'tB',Bote:'tBT',Bonte:'tBN'};
-  var rows = INST.filter(function(i){ return filtro === 'todos' || i.tipo === filtro; })
-                 .filter(function(i){ return i.t.toLowerCase().indexOf(search) >= 0; });
+  var rows = INST.filter(function(i){ return filtro==='todos'||i.tipo===filtro; })
+                 .filter(function(i){ return i.t.toLowerCase().indexOf(search)>=0; });
   rows.sort(function(a,b){
-    var vals = {t:'t',tipo:'tipo',venc:'venc',precio:'precio',vt:'vt',var:'varP',tir:'tir',tem:'tem',tna:'tna',dias:'dias'};
-    var key = vals[sortCol] || 'dias';
-    var av = a[key], bv = b[key];
-    if(sortAsc) return av < bv ? -1 : av > bv ? 1 : 0;
-    return av > bv ? -1 : av < bv ? 1 : 0;
+    var vals={t:'t',tipo:'tipo',venc:'venc',precio:'precio',vt:'vt',var:'varP',tir:'tir',tem:'tem',tna:'tna',dias:'dias'};
+    var key=vals[sortCol]||'dias';
+    var av=a[key], bv=b[key];
+    if(sortAsc) return av<bv?-1:av>bv?1:0;
+    return av>bv?-1:av<bv?1:0;
   });
   var tbody = document.getElementById('mktBody');
-  tbody.innerHTML = '';
+  tbody.innerHTML='';
   rows.forEach(function(inst){
-    var vc = inst.varP > 0 ? 'vup' : inst.varP < 0 ? 'vdn' : '';
-    var vs = (inst.varP >= 0 ? '+' : '') + inst.varP.toFixed(2) + '%';
-    var fu = inst._fuente || 'bon';
-    var ftCls = fu === 'byma' ? 'ft-live' : 'ft-bon';
-    var ftLbl = fu === 'byma' ? '&#9679; BYMA' : '&#9679; Bonistas';
-    var tr = document.createElement('tr');
+    var vc  = inst.varP>0?'vup':inst.varP<0?'vdn':'';
+    var vs  = (inst.varP>=0?'+':'')+inst.varP.toFixed(2)+'%';
+    var tr  = document.createElement('tr');
     tr.innerHTML =
-      '<td class="c cc"><input type="checkbox"' + (inst._sel?' checked':'') + ' onchange="toggleT(\'' + inst.t + '\',this)"></td>' +
-      '<td><span class="mono">' + inst.t + '</span></td>' +
-      '<td><span class="tag ' + (tc[inst.tipo]||'tL') + '">' + inst.tipo + '</span></td>' +
-      '<td class="mu-t">' + inst.venc + '</td>' +
-      '<td class="r" style="font-weight:600">' + inst.precio.toFixed(3) + '</td>' +
-      '<td class="r mu-t">' + inst.vt.toFixed(3) + '</td>' +
-      '<td class="r ' + vc + '">' + vs + '</td>' +
-      '<td class="r vd-t">' + inst.tir.toFixed(1) + '%</td>' +
-      '<td class="r vd-t">' + inst.tem.toFixed(1) + '%</td>' +
-      '<td class="r mu-t">' + inst.tna.toFixed(1) + '%</td>' +
-      '<td class="r" style="color:' + (inst.dias<=30?'#8b2020':'var(--gt)') + ';font-weight:' + (inst.dias<=30?700:300) + '">' + inst.dias + '</td>' +
-      '<td><span class="' + ftCls + '">' + ftLbl + '</span></td>';
+      '<td class="c cc"><input type="checkbox"'+(inst._sel?' checked':'')+' onchange="toggleT(\''+inst.t+'\',this)"></td>'+
+      '<td><span class="mono">'+inst.t+'</span></td>'+
+      '<td><span class="tag '+tipoTag(inst.tipo)+'">'+inst.tipo+'</span></td>'+
+      '<td class="mu-t">'+inst.venc+'</td>'+
+      '<td class="r" style="font-weight:600">'+inst.precio.toFixed(3)+'</td>'+
+      '<td class="r mu-t">'+inst.vt.toFixed(3)+'</td>'+
+      '<td class="r '+vc+'">'+vs+'</td>'+
+      '<td class="r vd-t">'+inst.tir.toFixed(1)+'%</td>'+
+      '<td class="r vd-t">'+inst.tem.toFixed(1)+'%</td>'+
+      '<td class="r mu-t">'+inst.tna.toFixed(1)+'%</td>'+
+      '<td class="r" style="color:'+(inst.dias<=30?'#8b2020':'var(--gt)')+'">'+inst.dias+'</td>';
     tbody.appendChild(tr);
   });
 }
 function toggleT(t,cb){
-  var inst = INST.find(function(i){ return i.t === t; });
-  if(inst) inst._sel = cb.checked;
+  var inst=INST.find(function(i){ return i.t===t; });
+  if(inst) inst._sel=cb.checked;
   recalcular();
 }
 
 // recalcular
-var chartInst = null, chartMode = 'lineal';
-
+var chartInst=null, chartMode='lineal';
 function recalcular(){
-  var monto   = parseFloat(document.getElementById('monto').value) || 1000000;
-  var horiz   = parseInt(document.getElementById('horizonte').value) || 30;
+  var monto   = parseFloat(document.getElementById('monto').value)||1000000;
+  var horiz   = parseInt(document.getElementById('horizonte').value)||30;
   var tna     = getTNA();
   var pfLbl   = getPFLabel();
   var renov   = document.getElementById('renov').value;
   var pfFinal = capPF(monto, horiz, tna, renov);
-  var pfTEM   = tna / 12;
+  var pfTEM   = tna/12;
 
-  // comparativa automatica
-  var similares = INST.filter(function(i){ return Math.abs(i.dias - horiz) <= 10; });
-  var autoDiv = document.getElementById('autoCompare');
-
+  // comparativa automática
+  var similares = INST.filter(function(i){ return Math.abs(i.dias-horiz)<=10; });
+  var autoDiv   = document.getElementById('autoCompare');
   if(!similares.length){
-    autoDiv.innerHTML = '<div class="al neu">No hay instrumentos con vencimiento dentro de +-10 dias del horizonte (' + horiz + ' dias).</div>';
+    autoDiv.innerHTML='<div class="al neu">No hay instrumentos con vencimiento dentro de ±10 días del horizonte ('+horiz+' días).</div>';
   } else {
-    var rows = similares.map(function(inst){
-      var r = capFinalTitulo(inst, monto, horiz);
-      return {inst:inst, neto:r.neto, bruto:r.bruto, costo:r.costo, vsPF:r.neto - pfFinal};
+    var rows2 = similares.map(function(inst){
+      var r=capFinalTitulo(inst,monto,horiz);
+      return {inst:inst,neto:r.neto,bruto:r.bruto,costo:r.costo,vsPF:r.neto-pfFinal};
     });
-    rows.sort(function(a,b){ return b.neto - a.neto; });
-    var best = rows[0];
-    var html = '<div class="tw2"><table class="ct-t"><thead><tr>' +
-      '<th>Instrumento</th><th>Tipo</th>' +
-      '<th class="r">Precio</th><th class="r">TIR</th><th class="r">TEM</th><th class="r">TNA</th>' +
-      '<th class="r">Dias</th><th class="r">Bruto</th><th class="r">Comision</th><th class="r">Capital neto</th><th class="r">vs. PF</th>' +
+    rows2.sort(function(a,b){ return b.neto-a.neto; });
+    var best=rows2[0];
+    var html='<div class="tw2"><table class="ct-t"><thead><tr>'+
+      '<th>Instrumento</th><th>Tipo</th>'+
+      '<th class="r">Precio</th><th class="r">TIR</th><th class="r">TEM</th><th class="r">TNA</th>'+
+      '<th class="r">Días</th><th class="r">Bruto</th><th class="r">Comisión</th><th class="r">Capital neto</th><th class="r">vs. PF</th>'+
       '</tr></thead><tbody>';
-    html += '<tr class="pr"><td><strong>' + pfLbl + '</strong></td><td><span class="tag tPF">PF Bancario</span></td>' +
-      '<td class="r mu-t">-</td>' +
-      '<td class="r">' + fp(tna*100,1) + '</td><td class="r">' + fp(pfTEM*100,2) + '</td><td class="r">' + fp(tna*100,1) + '</td>' +
-      '<td class="r mu-t">' + horiz + 'd</td>' +
-      '<td class="r"><strong>' + fa(pfFinal) + '</strong></td>' +
-      '<td class="r mu-t">-</td>' +
-      '<td class="r"><strong>' + fa(pfFinal) + '</strong></td>' +
+    html+='<tr class="pr"><td><strong>'+pfLbl+'</strong></td><td><span class="tag tPF">PF Bancario</span></td>'+
+      '<td class="r mu-t">-</td>'+
+      '<td class="r">'+fp(tna*100,1)+'</td><td class="r">'+fp(pfTEM*100,2)+'</td><td class="r">'+fp(tna*100,1)+'</td>'+
+      '<td class="r mu-t">'+horiz+'d</td>'+
+      '<td class="r"><strong>'+fa(pfFinal)+'</strong></td><td class="r mu-t">-</td>'+
+      '<td class="r"><strong>'+fa(pfFinal)+'</strong></td>'+
       '<td class="r"><span class="pill pb">base</span></td></tr>';
-    rows.forEach(function(row){
-      var mejor = row.inst === best.inst;
-      var ttc = {Lecap:'tL',Boncap:'tB',Bote:'tBT',Bonte:'tBN'}[row.inst.tipo] || 'tL';
-      var vsPFcls = row.vsPF >= 0 ? 'pu' : 'pd';
-      html += '<tr' + (mejor?' class="br"':'') + '>' +
-        '<td><span class="mono">' + row.inst.t + '</span>' + (mejor?' <span class="pill pu" style="font-size:9px">&#9733; Mejor</span>':'') + '</td>' +
-        '<td><span class="tag ' + ttc + '">' + row.inst.tipo + '</span></td>' +
-        '<td class="r mu-t">' + row.inst.precio.toFixed(3) + '</td>' +
-        '<td class="r vd-t">' + row.inst.tir.toFixed(1) + '%</td>' +
-        '<td class="r vd-t">' + row.inst.tem.toFixed(1) + '%</td>' +
-        '<td class="r mu-t">' + row.inst.tna.toFixed(1) + '%</td>' +
-        '<td class="r mu-t">' + row.inst.dias + '</td>' +
-        '<td class="r mu-t">' + fa(row.bruto) + '</td>' +
-        '<td class="r rj-t">-' + fa(row.costo) + '</td>' +
-        '<td class="r"><strong>' + fa(row.neto) + '</strong></td>' +
-        '<td class="r"><span class="pill ' + vsPFcls + '">' + (row.vsPF>=0?'+':'') + fa(row.vsPF) + '</span></td>' +
+    rows2.forEach(function(row){
+      var mejor=row.inst===best.inst;
+      var ttc=tipoTag(row.inst.tipo);
+      var vsPFcls=row.vsPF>=0?'pu':'pd';
+      html+='<tr'+(mejor?' class="br"':'')+'>'+
+        '<td><span class="mono">'+row.inst.t+'</span>'+(mejor?' <span class="pill pu" style="font-size:9px">&#9733; Mejor</span>':'')+' </td>'+
+        '<td><span class="tag '+ttc+'">'+row.inst.tipo+'</span></td>'+
+        '<td class="r mu-t">'+row.inst.precio.toFixed(3)+'</td>'+
+        '<td class="r vd-t">'+row.inst.tir.toFixed(1)+'%</td>'+
+        '<td class="r vd-t">'+row.inst.tem.toFixed(1)+'%</td>'+
+        '<td class="r mu-t">'+row.inst.tna.toFixed(1)+'%</td>'+
+        '<td class="r mu-t">'+row.inst.dias+'</td>'+
+        '<td class="r mu-t">'+fa(row.bruto)+'</td>'+
+        '<td class="r rj-t">-'+fa(row.costo)+'</td>'+
+        '<td class="r"><strong>'+fa(row.neto)+'</strong></td>'+
+        '<td class="r"><span class="pill '+vsPFcls+'">'+(row.vsPF>=0?'+':'')+fa(row.vsPF)+'</span></td>'+
         '</tr>';
     });
-    html += '</tbody></table></div>';
-    var diff = best.vsPF;
-    var dp = (diff / pfFinal * 100).toFixed(1);
-    var alerta = diff > 0
-      ? '<div class="al"><strong>' + best.inst.t + '</strong> rinde <strong>' + fa(diff) + ' mas</strong> que tu PF en ' + horiz + ' dias (+' + dp + '%) - neto de comisiones</div>'
-      : '<div class="al pfw">Tu <strong>' + pfLbl + '</strong> supera a los instrumentos con vencimiento similar (+' + fa(-diff) + ') - neto de comisiones</div>';
-    autoDiv.innerHTML = alerta + html;
+    html+='</tbody></table></div>';
+    var diff=best.vsPF, dp=(diff/pfFinal*100).toFixed(1);
+    var alerta=diff>0
+      ?'<div class="al"><strong>'+best.inst.t+'</strong> rinde <strong>'+fa(diff)+' más</strong> que tu PF en '+horiz+' días (+'+dp+'%) — neto de comisiones</div>'
+      :'<div class="al pfw">Tu <strong>'+pfLbl+'</strong> supera a los instrumentos con vencimiento similar (+'+fa(-diff)+') — neto de comisiones</div>';
+    autoDiv.innerHTML=alerta+html;
   }
 
   // seleccionados
-  var sel = INST.filter(function(i){ return i._sel; });
-  var bestInst = null, bestFinal = pfFinal;
-  var res = sel.map(function(inst){
-    var r = capFinalTitulo(inst, monto, horiz);
-    if(r.neto > bestFinal){ bestFinal = r.neto; bestInst = inst; }
-    return {inst:inst, neto:r.neto, bruto:r.bruto, costo:r.costo, ganancia:r.neto-monto, vsPF:r.neto-pfFinal};
+  var sel2 = INST.filter(function(i){ return i._sel; });
+  var bestInst=null, bestFinal=pfFinal;
+  var res = sel2.map(function(inst){
+    var r=capFinalTitulo(inst,monto,horiz);
+    if(r.neto>bestFinal){ bestFinal=r.neto; bestInst=inst; }
+    return {inst:inst,neto:r.neto,bruto:r.bruto,costo:r.costo,ganancia:r.neto-monto,vsPF:r.neto-pfFinal};
   });
 
-  var aDiv = document.getElementById('alertaDiv');
-  if(res.length > 0 && bestInst){
-    var d2 = bestFinal - pfFinal, dp2 = (d2/pfFinal*100).toFixed(1);
-    aDiv.innerHTML = d2 > 0
-      ? '<div class="al"><strong>' + bestInst.t + '</strong> rinde <strong>' + fa(d2) + ' mas</strong> que tu PF (+' + dp2 + '%) - neto comisiones</div>'
-      : '<div class="al pfw">Tu <strong>' + pfLbl + '</strong> supera a todos los seleccionados - neto de comisiones.</div>';
-  } else aDiv.innerHTML = '';
+  var aDiv=document.getElementById('alertaDiv');
+  if(res.length>0 && bestInst){
+    var d2=bestFinal-pfFinal, dp2=(d2/pfFinal*100).toFixed(1);
+    aDiv.innerHTML=d2>0
+      ?'<div class="al"><strong>'+bestInst.t+'</strong> rinde <strong>'+fa(d2)+' más</strong> que tu PF (+'+dp2+'%) — neto comisiones</div>'
+      :'<div class="al pfw">Tu <strong>'+pfLbl+'</strong> supera a todos los seleccionados — neto de comisiones.</div>';
+  } else aDiv.innerHTML='';
 
-  // metricas
-  var mg = document.getElementById('metricasGrid');
-  mg.innerHTML = '';
-  var cards = [{l:pfLbl, v:fa(pfFinal), s:'+'+fa(pfFinal-monto), cls:'pfmc', tag:'PF'}];
+  // métricas
+  var mg=document.getElementById('metricasGrid'); mg.innerHTML='';
+  var cards=[{l:pfLbl,v:fa(pfFinal),s:'+'+fa(pfFinal-monto),cls:'pfmc',tag:'PF'}];
   res.slice(0,3).forEach(function(r){
-    cards.push({l:r.inst.t, v:fa(r.neto), s:(r.vsPF>=0?'+':'')+fa(r.vsPF)+' vs PF', cls:r.inst===bestInst?'best':'', tag:r.inst===bestInst?'&#9733; Mejor':''});
+    cards.push({l:r.inst.t,v:fa(r.neto),s:(r.vsPF>=0?'+':'')+fa(r.vsPF)+' vs PF',cls:r.inst===bestInst?'best':'',tag:r.inst===bestInst?'&#9733; Mejor':''});
   });
   cards.forEach(function(m){
-    var d = document.createElement('div');
-    d.className = 'mc ' + (m.cls||'');
-    d.innerHTML = (m.tag?'<span class="mct">'+m.tag+'</span>':'') +
+    var d=document.createElement('div'); d.className='mc '+(m.cls||'');
+    d.innerHTML=(m.tag?'<span class="mct">'+m.tag+'</span>':'')+
       '<div class="mcl">'+m.l+'</div><div class="mcv">'+m.v+'</div><div class="mcs">'+m.s+'</div>';
     mg.appendChild(d);
   });
 
   // tabla detalle
-  var tbody = document.getElementById('resBody');
-  tbody.innerHTML = '';
-  var pr = document.createElement('tr'); pr.className = 'pr';
-  pr.innerHTML = '<td><strong>' + pfLbl + '</strong></td><td><span class="tag tPF">Bancario</span></td>' +
-    '<td class="r mu-t">-</td><td class="r mu-t">-</td>' +
-    '<td class="r">' + fp(tna*100,1) + '</td><td class="r mu-t">' + fp(pfTEM*100,2) + '</td><td class="r mu-t">' + fp(tna*100,1) + '</td>' +
-    '<td class="r mu-t">' + horiz + 'd</td>' +
-    '<td class="r"><strong>' + fa(pfFinal) + '</strong></td>' +
-    '<td class="r mu-t">-</td>' +
-    '<td class="r"><strong>' + fa(pfFinal) + '</strong></td>' +
-    '<td class="r mu-t">' + fa(pfFinal-monto) + '</td>' +
+  var tbody=document.getElementById('resBody'); tbody.innerHTML='';
+  var pr=document.createElement('tr'); pr.className='pr';
+  pr.innerHTML='<td><strong>'+pfLbl+'</strong></td><td><span class="tag tPF">Bancario</span></td>'+
+    '<td class="r mu-t">-</td><td class="r mu-t">-</td>'+
+    '<td class="r">'+fp(tna*100,1)+'</td><td class="r mu-t">'+fp(pfTEM*100,2)+'</td><td class="r mu-t">'+fp(tna*100,1)+'</td>'+
+    '<td class="r mu-t">'+horiz+'d</td>'+
+    '<td class="r"><strong>'+fa(pfFinal)+'</strong></td>'+
+    '<td class="r mu-t">-</td>'+
+    '<td class="r"><strong>'+fa(pfFinal)+'</strong></td>'+
+    '<td class="r mu-t">'+fa(pfFinal-monto)+'</td>'+
     '<td class="r"><span class="pill pb">base</span></td>';
   tbody.appendChild(pr);
   res.forEach(function(r){
-    var tr = document.createElement('tr');
-    if(r.inst === bestInst) tr.className = 'br';
-    var ttc = {Lecap:'tL',Boncap:'tB',Bote:'tBT',Bonte:'tBN'}[r.inst.tipo] || 'tL';
-    tr.innerHTML =
-      '<td><span class="mono">'+r.inst.t+'</span></td>' +
-      '<td><span class="tag '+ttc+'">'+r.inst.tipo+'</span></td>' +
-      '<td class="r mu-t">'+r.inst.precio.toFixed(3)+'</td>' +
-      '<td class="r mu-t">'+r.inst.vt.toFixed(3)+'</td>' +
-      '<td class="r vd-t">'+r.inst.tir.toFixed(1)+'%</td>' +
-      '<td class="r vd-t">'+r.inst.tem.toFixed(1)+'%</td>' +
-      '<td class="r mu-t">'+r.inst.tna.toFixed(1)+'%</td>' +
-      '<td class="r mu-t">'+r.inst.dias+'</td>' +
-      '<td class="r mu-t">'+fa(r.bruto)+'</td>' +
-      '<td class="r rj-t">-'+fa(r.costo)+'</td>' +
-      '<td class="r"><strong>'+fa(r.neto)+'</strong></td>' +
-      '<td class="r '+(r.vsPF>=0?'vd-t':'rj-t')+'">'+fa(r.ganancia)+'</td>' +
+    var tr=document.createElement('tr');
+    if(r.inst===bestInst) tr.className='br';
+    var ttc=tipoTag(r.inst.tipo);
+    tr.innerHTML=
+      '<td><span class="mono">'+r.inst.t+'</span></td>'+
+      '<td><span class="tag '+ttc+'">'+r.inst.tipo+'</span></td>'+
+      '<td class="r mu-t">'+r.inst.precio.toFixed(3)+'</td>'+
+      '<td class="r mu-t">'+r.inst.vt.toFixed(3)+'</td>'+
+      '<td class="r vd-t">'+r.inst.tir.toFixed(1)+'%</td>'+
+      '<td class="r vd-t">'+r.inst.tem.toFixed(1)+'%</td>'+
+      '<td class="r mu-t">'+r.inst.tna.toFixed(1)+'%</td>'+
+      '<td class="r mu-t">'+r.inst.dias+'</td>'+
+      '<td class="r mu-t">'+fa(r.bruto)+'</td>'+
+      '<td class="r rj-t">-'+fa(r.costo)+'</td>'+
+      '<td class="r"><strong>'+fa(r.neto)+'</strong></td>'+
+      '<td class="r '+(r.vsPF>=0?'vd-t':'rj-t')+'">'+fa(r.ganancia)+'</td>'+
       '<td class="r"><span class="pill '+(r.vsPF>=0?'pu':'pd')+'">'+(r.vsPF>=0?'+':'')+fa(r.vsPF)+'</span></td>';
     tbody.appendChild(tr);
   });
@@ -736,26 +776,26 @@ function recalcular(){
   renderChart(monto, horiz, tna, renov, res, pfLbl);
 }
 
-// grafico
-var CC = ['#93D500','#1A3F47','#4472C4','#ffde59','#e66565','#a78bfa'];
+// gráfico
+var CC=['#93D500','#1A3F47','#4472C4','#ffde59','#e66565','#a78bfa'];
 function renderChart(monto, horiz, tna, renov, res, pfLbl){
-  var pts = chartMode === 'mensual' ? Math.ceil(horiz/30) : Math.min(horiz,60);
-  var da = [], la = [];
-  for(var i=0;i<=pts;i++){ var d=Math.round(i*horiz/pts); da.push(d); la.push('Dia '+d); }
-  var ds = [{label:pfLbl, data:da.map(function(d){ return capPF(monto,d,tna,renov); }),
-    borderColor:'#575756', borderWidth:2, borderDash:[5,4], tension:.4, fill:false, pointRadius:0}];
+  var pts=chartMode==='mensual'?Math.ceil(horiz/30):Math.min(horiz,60);
+  var da=[],la=[];
+  for(var i=0;i<=pts;i++){ var d=Math.round(i*horiz/pts); da.push(d); la.push('Día '+d); }
+  var ds=[{label:pfLbl,data:da.map(function(d){ return capPF(monto,d,tna,renov); }),
+    borderColor:'#575756',borderWidth:2,borderDash:[5,4],tension:.4,fill:false,pointRadius:0}];
   res.forEach(function(r,i){
-    ds.push({label:r.inst.t, data:da.map(function(d){ return capFinalTitulo(r.inst,monto,d).neto; }),
-      borderColor:CC[i]||'#93D500', borderWidth:2, tension:.4, fill:false, pointRadius:0});
+    ds.push({label:r.inst.t,data:da.map(function(d){ return capFinalTitulo(r.inst,monto,d).neto; }),
+      borderColor:CC[i]||'#93D500',borderWidth:2,tension:.4,fill:false,pointRadius:0});
   });
-  document.getElementById('legWrap').innerHTML = ds.map(function(d){
+  document.getElementById('legWrap').innerHTML=ds.map(function(d){
     return '<div class="leg-i"><div class="leg-sq" style="background:'+d.borderColor+'"></div><span>'+d.label+'</span></div>';
   }).join('');
-  if(chartInst){ chartInst.destroy(); chartInst = null; }
-  chartInst = new Chart(document.getElementById('myChart').getContext('2d'),{
-    type:'line', data:{labels:la, datasets:ds},
-    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:false}, tooltip:{backgroundColor:'#1A3F47',borderColor:'rgba(147,213,0,.3)',borderWidth:1,
+  if(chartInst){ chartInst.destroy(); chartInst=null; }
+  chartInst=new Chart(document.getElementById('myChart').getContext('2d'),{
+    type:'line',data:{labels:la,datasets:ds},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1A3F47',borderColor:'rgba(147,213,0,.3)',borderWidth:1,
         titleColor:'rgba(255,255,255,.55)',bodyColor:'#fff',padding:10,
         callbacks:{label:function(c){ return ' '+c.dataset.label+': '+fa(c.raw); }}}},
       scales:{
@@ -765,7 +805,7 @@ function renderChart(monto, horiz, tna, renov, res, pfLbl){
   });
 }
 function setChartMode(m,btn){
-  chartMode = m;
+  chartMode=m;
   document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
   recalcular();
@@ -773,137 +813,27 @@ function setChartMode(m,btn){
 
 // how to
 function toggleHow(){
-  var body = document.getElementById('howBody');
-  var open = body.style.display === 'none';
-  body.style.display = open ? 'block' : 'none';
-  document.getElementById('howToggle').innerHTML = open ? '&#9650; Cerrar guia' : '&#9660; Ver guia';
-}
-
-// api bar
-function setApiBar(estado, msg){
-  var el = document.getElementById('apiBar');
-  var ts = new Date().toLocaleTimeString('es-AR');
-  if(estado === 'loading'){
-    el.innerHTML = '<span><div class="spin"></div>Actualizando precios...</span>';
-    return;
-  }
-  var clr = estado==='ok' ? 'var(--vd)' : '#ffde59';
-  var ico = estado==='ok' ? '&#10003;' : '&#9888;';
-  el.innerHTML =
-    '<span><strong>Fuente:</strong> Google Sheets Proxy - BYMA</span>' +
-    '<span style="color:'+clr+';font-weight:600">'+ico+' '+msg+'</span>' +
-    '<span class="mu2">| '+ts+'</span>';
-  document.getElementById('statusTxt').textContent = ts;
-}
-
-// fetch sheets
-function fetchPreciosSheets(){
-  setApiBar('loading');
-  fetch(SHEETS_URL)
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(!data.ok || !data.titulos) throw new Error('Respuesta invalida');
-      var live = 0, ref = 0;
-      Object.keys(data.titulos).forEach(function(ticker){
-        var vals = data.titulos[ticker];
-        var inst = INST.find(function(i){ return i.t === ticker; });
-        if(!inst || !vals.precio) return;
-        inst.precio = vals.precio;
-        if(vals.varP  !== undefined) inst.varP = vals.varP;
-        if(vals.tem   !== undefined) inst.tem  = vals.tem;
-        if(vals.tna   !== undefined) inst.tna  = vals.tna;
-        if(vals.tir   !== undefined) inst.tir  = vals.tir;
-        if(vals.vt    !== undefined) inst.vt   = vals.vt;
-        inst._fuente = vals.fuente || 'ref';
-        vals.fuente === 'byma' ? live++ : ref++;
-      });
-      actualizarDiasDesdeHoy();
-      setApiBar('ok', 'Actualizado ' + data.fecha + ' - ' + live + ' BYMA - ' + ref + ' ref.');
-      renderMkt();
-      recalcular();
-    })
-    .catch(function(e){
-      setApiBar('err', 'Error: ' + e.message + ' - usando datos locales');
-    });
+  var body=document.getElementById('howBody');
+  var open=body.style.display==='none';
+  body.style.display=open?'block':'none';
+  document.getElementById('howToggle').innerHTML=open?'&#9650; Cerrar guía':'&#9660; Ver guía';
 }
 
 // init
-// Calcula dias calendario desde hoy hasta la fecha de vencimiento
-function calcDias(vencStr){
-  var hoy = new Date();
-  hoy.setHours(0, 0, 0, 0);
-  var partes = vencStr.split('-');
-  var venc = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
-  venc.setHours(0, 0, 0, 0);
-  var diff = Math.round((venc - hoy) / 86400000);
-  return diff > 0 ? diff : 0;
-}
-
-// Recorre INST, recalcula dias desde hoy, reconstruye HORIZ_TICKER y regenera el dropdown
-function actualizarDiasDesdeHoy(){
-  INST.forEach(function(inst){
-    inst.dias = calcDias(inst.venc);
-  });
-
-  HORIZ_TICKER = {};
-  HORIZ_TICKERS_VENC.forEach(function(item){
-    var d = calcDias(item.venc);
-    if(d > 0) HORIZ_TICKER[d] = item.t;
-  });
-
-  var sel = document.getElementById('horizonte');
-  if(!sel) return;
-  var valorActual = parseInt(sel.value) || 0;
-
-  var fijas = [30, 60, 90, 180, 365];
-  var comparables = Object.keys(HORIZ_TICKER).map(Number);
-  var todas = fijas.concat(comparables);
-  todas = todas.filter(function(v, i, a){ return a.indexOf(v) === i && v > 0; });
-  todas.sort(function(a, b){ return a - b; });
-
-  var nuevoValor = todas.reduce(function(prev, curr){
-    return Math.abs(curr - valorActual) < Math.abs(prev - valorActual) ? curr : prev;
-  }, todas[0]);
-
-  sel.innerHTML = '';
-  todas.forEach(function(d){
-    var opt = document.createElement('option');
-    opt.value = d;
-    var ticker = HORIZ_TICKER[d];
-    opt.textContent = d + ' dias' + (ticker ? ' - comparable ' + ticker : '');
-    if(d === nuevoValor) opt.selected = true;
-    sel.appendChild(opt);
-  });
-}
-
 function init(){
   actualizarDiasDesdeHoy();
   onHorizonte();
-  fetchPreciosSheets();
 }
 
 document.addEventListener('DOMContentLoaded', function(){
   init();
-
-  // Refrescar precios cada 5 minutos
-  var INTERVALO = 5 * 60; // segundos
-  var restante = INTERVALO;
-
+  // Actualizar días automáticamente cada medianoche
   setInterval(function(){
-    restante--;
-    if(restante <= 0){
-      restante = INTERVALO;
-      actualizarDiasDesdeHoy();
-      fetchPreciosSheets();
-    }
-    // Actualizar countdown en statusTxt
-    var min = Math.floor(restante / 60);
-    var seg = restante % 60;
-    document.getElementById('statusTxt').textContent =
-      'Prox. actualizacion: ' + min + ':' + (seg < 10 ? '0' : '') + seg;
-  }, 1000);
+    actualizarDiasDesdeHoy();
+    renderMkt();
+    recalcular();
+  }, 60*60*1000); // cada hora
 });
-
 </script>
 </body>
 </html>
