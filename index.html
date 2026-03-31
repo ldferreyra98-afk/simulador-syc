@@ -273,32 +273,39 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
         <div class="bsw">
           <select id="bancoSel" onchange="onBanco()">
             <option value="">- Seleccioná tu banco -</option>
-            <optgroup label="Grandes bancos">
-              <option value="macro">Banco Macro</option>
-              <option value="nacion">Banco Nación Argentina</option>
-              <option value="provincia">Banco Provincia de Bs. As.</option>
-              <option value="credicoop">Banco Credicoop</option>
-              <option value="bbva">Banco BBVA Argentina</option>
-              <option value="santander">Banco Santander</option>
-              <option value="galicia">Banco Galicia</option>
-              <option value="ciudad">Banco Ciudad de Bs. As.</option>
-              <option value="icbc">Banco ICBC</option>
-              <option value="hsbc">Banco HSBC</option>
+            <optgroup label="10 bancos con mayor volumen">
+              <option value="nacion">Banco Nación Argentina — 22%</option>
+              <option value="provincia">Banco Provincia de Bs. As. — 23%</option>
+              <option value="macro">Banco Macro — 24%</option>
+              <option value="credicoop">Banco Credicoop — 21%</option>
+              <option value="galicia">Banco Galicia — 21%</option>
+              <option value="bbva">Banco BBVA Argentina — 21%</option>
+              <option value="santander">Banco Santander — 20%</option>
+              <option value="icbc">Banco ICBC — 22.5%</option>
+              <option value="ciudad">Banco Ciudad de Bs. As. — 20%</option>
+              <option value="hsbc">Banco HSBC — 20%</option>
             </optgroup>
-            <optgroup label="Bancos medianos">
-              <option value="cordoba">Banco de Córdoba</option>
-              <option value="hipotecario">Banco Hipotecario</option>
-              <option value="supervielle">Banco Supervielle</option>
-              <option value="patagonia">Banco Patagonia</option>
-              <option value="comafi">Banco Comafi</option>
-              <option value="chubut">Banco del Chubut</option>
-            </optgroup>
-            <optgroup label="Financieras digitales">
-              <option value="cmf">Banco CMF</option>
-              <option value="meridian">Banco Meridian</option>
-              <option value="voii">Banco Voii</option>
-              <option value="julio">Banco Julio</option>
-              <option value="bibank">Bibank</option>
+            <optgroup label="Otros bancos con PF online">
+              <option value="meridian">Banco Meridian — 28.5%</option>
+              <option value="creditoregional">Crédito Regional — 28.5%</option>
+              <option value="voii">Banco Voii — 28%</option>
+              <option value="cmf">Banco CMF — 27.5%</option>
+              <option value="bica">Banco Bica — 27%</option>
+              <option value="reba">Reba Cía. Financiera — 27%</option>
+              <option value="delsol">Banco del Sol — 25.5%</option>
+              <option value="hipotecario">Banco Hipotecario — 23%</option>
+              <option value="cordoba">Banco de Córdoba — 25.5%</option>
+              <option value="chubut">Banco del Chubut — 24%</option>
+              <option value="bibank">Bibank — 24%</option>
+              <option value="masventas">Banco Masventas — 24%</option>
+              <option value="julio">Banco Julio — 23.5%</option>
+              <option value="comercio">Banco de Comercio — 25%</option>
+              <option value="dino">Banco Dino — 25%</option>
+              <option value="mariva">Banco Mariva — 25%</option>
+              <option value="comafi">Banco Comafi — 21%</option>
+              <option value="corrientes">Banco de Corrientes — 22%</option>
+              <option value="supervielle">Banco Supervielle — 20%</option>
+              <option value="patagonia">Banco Patagonia — 20%</option>
             </optgroup>
             <optgroup label="Otro"><option value="otro">Otro / tasa manual</option></optgroup>
           </select>
@@ -402,7 +409,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 </div>
 
 <div class="footer">
-  <div class="fd"><strong style="color:rgba(255,255,255,.58)">Aviso legal:</strong> Simulador informativo. Precios y tasas según Bonistas.com al 31/03/2026. Tasas PF según BCRA Mar 2026. Comisiones según planilla S&amp;C Inversiones. Consultá a tu asesor antes de invertir.</div>
+  <div class="fd"><strong style="color:rgba(255,255,255,.58)">Aviso legal:</strong> Simulador informativo. Precios y tasas según Bonistas.com al 31/03/2026. Tasas PF según BCRA 31/03/2026. Comisiones según planilla S&amp;C Inversiones. Consultá a tu asesor antes de invertir.</div>
   <div class="fb2">S&amp;C Inversiones S.A.<br><span style="font-weight:300;color:rgba(255,255,255,.32);font-family:'Inter'">www.sycinversiones.com</span></div>
 </div>
 
@@ -509,8 +516,27 @@ function fa(v){ return '$' + Math.round(v).toLocaleString('es-AR'); }
 function fp(v,d){ d = d||2; return v.toFixed(d)+'%'; }
 
 // bancos
-var BTNA = {macro:28,nacion:25,provincia:25,credicoop:24,bbva:24,santander:23,galicia:23,ciudad:23,icbc:23.5,hsbc:22,cordoba:25,hipotecario:23.5,supervielle:22,patagonia:22,comafi:23,chubut:23.5,cmf:29,meridian:28,voii:28,julio:27,bibank:27};
-var BN   = {macro:'Banco Macro',nacion:'Banco Nación',provincia:'Banco Provincia',credicoop:'Banco Credicoop',bbva:'Banco BBVA',santander:'Banco Santander',galicia:'Banco Galicia',ciudad:'Banco Ciudad',icbc:'Banco ICBC',hsbc:'Banco HSBC',cordoba:'Banco de Córdoba',hipotecario:'Banco Hipotecario',supervielle:'Banco Supervielle',patagonia:'Banco Patagonia',comafi:'Banco Comafi',chubut:'Banco del Chubut',cmf:'Banco CMF',meridian:'Banco Meridian',voii:'Banco Voii',julio:'Banco Julio',bibank:'Bibank'};
+// Tasas BCRA — Plazo Fijo $100.000 intransferible 30 días — Clientes (31/03/2026)
+var BTNA = {
+  nacion:22, santander:20, galicia:21, provincia:23, bbva:21, macro:24,
+  credicoop:21, icbc:22.5, ciudad:20, hsbc:20,
+  cmf:27.5, comafi:21, cordoba:25.5, chubut:24, hipotecario:23,
+  julio:23.5, meridian:28.5, voii:28, bibank:24, supervielle:20,
+  patagonia:20, bica:27, comercio:25, corrientes:22, delsol:25.5,
+  dino:25, mariva:25, masventas:24, creditoregional:28.5, reba:27
+};
+var BN = {
+  nacion:'Banco Nación', santander:'Banco Santander', galicia:'Banco Galicia',
+  provincia:'Banco Provincia', bbva:'Banco BBVA', macro:'Banco Macro',
+  credicoop:'Banco Credicoop', icbc:'Banco ICBC', ciudad:'Banco Ciudad',
+  hsbc:'Banco HSBC', cmf:'Banco CMF', comafi:'Banco Comafi',
+  cordoba:'Banco de Córdoba', chubut:'Banco del Chubut', hipotecario:'Banco Hipotecario',
+  julio:'Banco Julio', meridian:'Banco Meridian', voii:'Banco Voii',
+  bibank:'Bibank', supervielle:'Banco Supervielle', patagonia:'Banco Patagonia',
+  bica:'Banco Bica', comercio:'Banco de Comercio', corrientes:'Banco de Corrientes',
+  delsol:'Banco del Sol', dino:'Banco Dino', mariva:'Banco Mariva',
+  masventas:'Banco Masventas', creditoregional:'Crédito Regional', reba:'Reba Cía. Financiera'
+};
 
 var ARANCEL = {estandar:1.20, preferente:1.00};
 
