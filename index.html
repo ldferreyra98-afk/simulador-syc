@@ -153,8 +153,24 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 .fd{font-size:11px;color:rgba(255,255,255,.36);line-height:1.5;max-width:740px;}
 .fb2{font-family:'Montserrat',sans-serif;font-size:11px;color:var(--vd);font-weight:700;text-align:right;white-space:nowrap;margin-left:18px;}
 .upd-badge{background:rgba(147,213,0,.13);border:1px solid rgba(147,213,0,.25);color:var(--vd);padding:3px 9px;border-radius:var(--r);font-size:10px;font-weight:700;font-family:'Montserrat',sans-serif;}
-@media(max-width:900px){.g3{grid-template-columns:1fr 1fr;}}
-@media(max-width:720px){.g3{grid-template-columns:1fr;}.g4{grid-template-columns:1fr 1fr;}.page{padding:13px 10px 32px;}.how-steps{grid-template-columns:1fr;}}
+.main-tabs{display:flex;gap:4px;margin-bottom:18px;border-bottom:2px solid var(--gc);}
+.main-tab{padding:9px 22px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;background:none;border:none;color:var(--gt);cursor:pointer;text-transform:uppercase;letter-spacing:.5px;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;}
+.main-tab:hover{color:var(--az);}
+.main-tab.active{color:var(--az);border-bottom-color:var(--vd);}
+.main-panel{display:none;}
+.main-panel.active{display:block;}
+.cer-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:16px;}
+.inf-wrap{background:var(--gc);border-radius:var(--rmd);padding:16px;margin-bottom:16px;}
+.inf-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--az);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.inf-title::after{content:'';flex:1;height:1px;background:#d2d2d2;}
+.inf-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+.inf-cell{background:#fff;border:1px solid #d2d2d2;border-radius:var(--r);padding:8px 6px;text-align:center;}
+.inf-cell label{font-size:9px;font-weight:700;color:var(--gt);text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:4px;}
+.inf-cell input{width:100%;border:none;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--az);outline:none;padding:2px 0;}
+.inf-cell input:focus{color:var(--vd);}
+.inf-mes{font-size:9px;color:var(--gt);margin-top:3px;}
+@media(max-width:900px){.g3{grid-template-columns:1fr 1fr;}.cer-grid{grid-template-columns:1fr;}.inf-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:720px){.g3{grid-template-columns:1fr;}.g4{grid-template-columns:1fr 1fr;}.page{padding:13px 10px 32px;}.how-steps{grid-template-columns:1fr;}.inf-grid{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
@@ -222,6 +238,15 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
   TEM = tasa efectiva mensual implícita en precio vs VT. TNA = TEM × 12. TIR = (1+TEM)^12 − 1.
   <strong>Comisiones S&amp;C:</strong> MAX(Monto × Arancel% × días/365 , $100) + Nominales × 0.0001
 </div>
+
+<!-- MAIN TABS -->
+<div class="main-tabs">
+  <button class="main-tab active" onclick="switchTab('tasa',this)">&#9660; Tasa Fija — Lecaps &amp; Boncaps</button>
+  <button class="main-tab" onclick="switchTab('cer',this)">&#128200; CER — vs Inflación</button>
+</div>
+
+<!-- TAB 1: TASA FIJA -->
+<div class="main-panel active" id="panel-tasa">
 
 <!-- PARAMETROS -->
 <div class="sec">
@@ -317,7 +342,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
       </div>
       <div class="fg" id="tnaWrap">
         <label>TNA del PF (%)</label>
-        <div class="rel"><input type="number" id="tna_m" value="28" min="0" max="500" step="0.5" class="sf" oninput="recalcular()"><span class="sfx">%</span></div>
+        <div class="rel"><input type="number" id="tna_m" value="21" min="0" max="500" step="0.5" class="sf" oninput="recalcular()"><span class="sfx">%</span></div>
       </div>
       <div class="fg">
         <label>Renovación</label>
@@ -335,8 +360,8 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 <div class="sec">
   <div class="sl"><span class="ar">&#8594;</span> Mercado — todos los instrumentos — Bonistas.com 31/03/2026</div>
   <div class="filter-row">
-    <button class="fb active" onclick="setF('todos',this)">Todos</button>
-    <button class="fb" onclick="setF('Lecap',this)">Lecap</button>
+    <button class="fb" onclick="setF('todos',this)">Todos</button>
+    <button class="fb active" onclick="setF('Lecap',this)">Lecap</button>
     <button class="fb" onclick="setF('Boncap',this)">Boncap</button>
     <button class="fb" onclick="setF('Bote',this)">Bote</button>
     <button class="fb" onclick="setF('Bonte',this)">Bonte</button>
@@ -406,9 +431,115 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
   </div>
 </div>
 
+</div><!-- end panel-tasa -->
+
+<!-- TAB 2: CER vs INFLACIÓN -->
+<div class="main-panel" id="panel-cer">
+
+<div class="nota">
+  <strong>Bonos CER — ¿Te cubrís de la inflación?</strong>
+  Estos bonos ajustan capital por inflación oficial (CER/IPC) y pagan un spread real por encima.
+  Ingresá tu inflación proyectada y el simulador te muestra cuánto capital recibís al vencimiento vs cuánto necesitarías para mantener el poder adquisitivo.
 </div>
 
-<div class="footer">
+<!-- PARAMETROS CER -->
+<div class="g3" style="margin-bottom:16px;">
+  <div class="card">
+    <div class="ct"><span class="dot"></span> Tu inversión</div>
+    <div class="fg">
+      <label>Monto (ARS)</label>
+      <div class="rel"><span class="pfx">$</span><input type="number" id="cer-monto" value="1000000" min="1000" step="10000" oninput="recalcularCer()"></div>
+    </div>
+    <div class="fg">
+      <label>Categoría del cliente</label>
+      <select id="cer-cat" onchange="recalcularCer()">
+        <option value="estandar">Estándar — 1.20%</option>
+        <option value="preferente">Preferente — 1.00%</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct"><span class="dot"></span> Inflación proyectada</div>
+    <div class="fg">
+      <label>Modo de ingreso</label>
+      <select id="cer-modo" onchange="onCerModo()">
+        <option value="fija">Tasa mensual fija</option>
+        <option value="variable">Mes a mes (variable)</option>
+      </select>
+    </div>
+    <div class="fg" id="cer-fija-wrap">
+      <label>Inflación mensual (%)</label>
+      <div class="rel"><input type="number" id="cer-inf-fija" value="3.0" min="0" max="50" step="0.1" class="sf" oninput="recalcularCer()"><span class="sfx">%</span></div>
+    </div>
+    <div class="fg" id="cer-meses-wrap">
+      <label>Meses a proyectar</label>
+      <select id="cer-meses" onchange="onCerModo()">
+        <option value="3">3 meses</option>
+        <option value="6" selected>6 meses</option>
+        <option value="9">9 meses</option>
+        <option value="12">12 meses</option>
+        <option value="18">18 meses</option>
+        <option value="24">24 meses</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct"><span class="dot"></span> Resumen inflación</div>
+    <div class="com-pill" id="cer-resumen-pill" style="font-size:12px;line-height:2;">—</div>
+  </div>
+</div>
+
+<!-- INPUTS VARIABLES -->
+<div class="inf-wrap" id="cer-variable-wrap" style="display:none;">
+  <div class="inf-title">Inflación mensual proyectada — mes a mes (% mensual)</div>
+  <div class="inf-grid" id="inf-inputs"></div>
+</div>
+
+<!-- TABLA CER -->
+<div class="sec">
+  <div class="sl"><span class="ar">&#8594;</span> Bonos CER — Bonistas.com 31/03/2026 | Resultado a vencimiento de cada bono</div>
+  <div class="mkt-wrap">
+    <table class="mkt-t">
+      <thead><tr>
+        <th class="c cc"></th>
+        <th>Ticker</th>
+        <th>Vencimiento</th>
+        <th class="r">Precio</th>
+        <th class="r">TIR real</th>
+        <th class="r">Días</th>
+        <th class="r">Capital neto CER</th>
+        <th class="r">Solo inflación</th>
+        <th class="r">Ganancia real</th>
+        <th class="r">Resultado</th>
+      </tr></thead>
+      <tbody id="cerMktBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- COMPARATIVA SELECCIONADOS -->
+<div id="cer-comp-wrap" style="display:none;">
+  <div class="sec">
+    <div class="sl"><span class="ar">&#8594;</span> Comparativa — CER seleccionados</div>
+    <div class="g4" id="cer-metricas"></div>
+  </div>
+  <div class="sec">
+    <div class="sl"><span class="ar">&#8594;</span> Evolución del capital — CER vs inflación pura</div>
+    <div class="chart-card">
+      <div class="ctop">
+        <span class="cttl">Capital proyectado: CER (neto comisiones) vs inflación acumulada</span>
+        <div class="leg-row" id="cer-legWrap"></div>
+      </div>
+      <div style="position:relative;width:100%;height:270px;"><canvas id="cerChart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end panel-cer -->
+
+</div>
   <div class="fd"><strong style="color:rgba(255,255,255,.58)">Aviso legal:</strong> Simulador informativo. Precios y tasas según Bonistas.com al 31/03/2026. Tasas PF según BCRA 31/03/2026. Comisiones según planilla S&amp;C Inversiones. Consultá a tu asesor antes de invertir.</div>
   <div class="fb2">S&amp;C Inversiones S.A.<br><span style="font-weight:300;color:rgba(255,255,255,.32);font-family:'Inter'">www.sycinversiones.com</span></div>
 </div>
@@ -428,21 +559,38 @@ function fetchPreciosSheets() {
       var live = 0, ref = 0;
       Object.keys(data.titulos).forEach(function(ticker){
         var vals = data.titulos[ticker];
+
+        // Tasa fija
         var inst = INST.find(function(i){ return i.t === ticker; });
-        if(!inst || !vals.precio) return;
-        inst.precio = vals.precio;
-        if(vals.varP  !== undefined) inst.varP = vals.varP;
-        if(vals.tem   !== undefined) inst.tem  = vals.tem;
-        if(vals.tna   !== undefined) inst.tna  = vals.tna;
-        if(vals.tir   !== undefined) inst.tir  = vals.tir;
-        if(vals.vt    !== undefined) inst.vt   = vals.vt;
-        if(vals.dias  !== undefined) inst.dias = vals.dias;
-        inst._fuente = vals.fuente || 'ref';
-        vals.fuente === 'bonistas' ? live++ : ref++;
+        if(inst && vals.precio){
+          inst.precio = vals.precio;
+          if(vals.varP  !== undefined) inst.varP = vals.varP;
+          if(vals.tem   !== undefined) inst.tem  = vals.tem;
+          if(vals.tna   !== undefined) inst.tna  = vals.tna;
+          if(vals.tir   !== undefined) inst.tir  = vals.tir;
+          if(vals.vt    !== undefined) inst.vt   = vals.vt;
+          if(vals.dias  !== undefined) inst.dias = vals.dias;
+          inst._fuente = vals.fuente || 'ref';
+          vals.fuente === 'bonistas' ? live++ : ref++;
+          return;
+        }
+
+        // CER
+        var instCer = INST_CER.find(function(i){ return i.t === ticker; });
+        if(instCer && vals.precio){
+          instCer.precio = vals.precio;
+          if(vals.varP !== undefined) instCer.varP    = vals.varP;
+          if(vals.tir  !== undefined) instCer.tirReal = vals.tir;  // TIR real para CER
+          if(vals.vt   !== undefined) instCer.vt      = vals.vt;
+          if(vals.dias !== undefined) instCer.dias    = vals.dias;
+          instCer._fuente = vals.fuente || 'ref';
+          vals.fuente === 'bonistas' ? live++ : ref++;
+        }
       });
       setApiBar('ok', 'Bonistas · ' + data.fecha + ' · ' + live + ' live');
       renderMkt();
       recalcular();
+      if(cerIniciado) recalcularCer();
     })
     .catch(function(e){
       setApiBar('err', 'Error: ' + e.message + ' — usando datos locales');
@@ -666,7 +814,7 @@ function onHorizonte(){
 }
 
 // tabla mercado
-var filtro='todos', sortCol='dias', sortAsc=true;
+var filtro='Lecap', sortCol='dias', sortAsc=true;
 function setF(f,btn){
   filtro=f;
   document.querySelectorAll('.fb').forEach(function(b){ b.classList.remove('active'); });
@@ -887,6 +1035,267 @@ function setChartMode(m,btn){
   recalcular();
 }
 
+// ── MAIN TAB SWITCH ──────────────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.main-tab').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.main-panel').forEach(function(p){ p.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('panel-'+tab).classList.add('active');
+  if(tab==='cer') iniciarCer();
+}
+
+// ── DATOS CER ────────────────────────────────────────────────────────
+// Bonos CER — datos Bonistas 31/03/2026 (se actualizan via proxy si disponibles)
+// BONOS CER — Bonistas.com 31/03/2026
+// tirReal = TIR sobre CER (spread real). Negativo = rinde debajo de inflación.
+var INST_CER = [
+  {t:'X15Y6',  tipo:'BONCER', venc:'2026-04-15', precio:104.535, tirReal:-9.0,  dias:15,   _sel:false},
+  {t:'X29Y6',  tipo:'BONCER', venc:'2026-05-29', precio:113.020, tirReal:-9.5,  dias:59,   _sel:false},
+  {t:'X31L6',  tipo:'BONCER', venc:'2026-07-31', precio:107.900, tirReal:-5.8,  dias:122,  _sel:false},
+  {t:'X30N6',  tipo:'BONCER', venc:'2026-11-30', precio:110.250, tirReal:-0.4,  dias:244,  _sel:false},
+  {t:'TZX26',  tipo:'BONCER', venc:'2026-06-30', precio:368.350, tirReal:-6.9,  dias:91,   _sel:false},
+  {t:'TZXO6',  tipo:'BONCER', venc:'2026-10-31', precio:151.800, tirReal:-0.9,  dias:213,  _sel:false},
+  {t:'TZXD6',  tipo:'BONCER', venc:'2026-12-31', precio:267.500, tirReal:0.0,   dias:275,  _sel:false},
+  {t:'TX26',   tipo:'BONCER', venc:'2026-11-09', precio:1321.00, tirReal:-3.1,  dias:222,  _sel:false},
+  {t:'TZXA7',  tipo:'BONCER', venc:'2027-04-30', precio:110.000, tirReal:1.1,   dias:395,  _sel:false},
+  {t:'TZXY7',  tipo:'BONCER', venc:'2027-05-31', precio:108.500, tirReal:1.1,   dias:426,  _sel:false},
+  {t:'TZXM7',  tipo:'BONCER', venc:'2027-07-31', precio:198.400, tirReal:1.2,   dias:487,  _sel:false},
+  {t:'TZX27',  tipo:'BONCER', venc:'2027-11-14', precio:353.100, tirReal:2.0,   dias:593,  _sel:false},
+  {t:'TX28',   tipo:'BONCER', venc:'2028-09-13', precio:1926.00, tirReal:3.1,   dias:896,  _sel:false},
+  {t:'TZXD7',  tipo:'BONCER', venc:'2027-12-31', precio:248.000, tirReal:4.5,   dias:640,  _sel:false},
+  {t:'TZX28',  tipo:'BONCER', venc:'2028-11-14', precio:311.350, tirReal:6.9,   dias:958,  _sel:false},
+  {t:'TX31',   tipo:'BONCER', venc:'2031-11-23', precio:1360.00, tirReal:7.0,   dias:2063, _sel:false},
+  {t:'DICP',   tipo:'BONCER', venc:'2033-12-31', precio:48535,   tirReal:7.7,   dias:2831, _sel:false},
+  {t:'DIP0',   tipo:'BONCER', venc:'2033-12-31', precio:48740,   tirReal:7.5,   dias:2831, _sel:false},
+  {t:'PARP',   tipo:'BONCER', venc:'2038-12-31', precio:32550,   tirReal:8.4,   dias:4656, _sel:false},
+  {t:'PAP0',   tipo:'BONCER', venc:'2038-12-31', precio:32740,   tirReal:8.3,   dias:4656, _sel:false},
+  {t:'CUAP',   tipo:'BONCER', venc:'2045-12-31', precio:39975,   tirReal:8.7,   dias:7213, _sel:false},
+];
+
+var cerIniciado = false;
+var cerChartInst = null;
+var MESES_NOM = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+function iniciarCer() {
+  if(cerIniciado) return;
+  cerIniciado = true;
+  generarInputsInflacion();
+  recalcularCer();
+}
+
+// ── MODO INFLACIÓN ───────────────────────────────────────────────────
+function onCerModo() {
+  var modo = document.getElementById('cer-modo').value;
+  document.getElementById('cer-variable-wrap').style.display = modo==='variable' ? '' : 'none';
+  document.getElementById('cer-fija-wrap').style.display     = modo==='fija'     ? '' : 'none';
+  if(modo==='variable') generarInputsInflacion();
+  recalcularCer();
+}
+
+function generarInputsInflacion() {
+  var meses  = parseInt(document.getElementById('cer-meses').value) || 6;
+  var grid   = document.getElementById('inf-inputs');
+  var hoy    = new Date();
+  grid.innerHTML = '';
+  var defaults = [3.5,3.2,3.0,2.8,2.6,2.5,2.4,2.3,2.2,2.1,2.0,2.0,2.0,1.9,1.9,1.8,1.8,1.7,1.7,1.6,1.6,1.5,1.5,1.5];
+  for(var i=0; i<meses; i++) {
+    var mes  = new Date(hoy.getFullYear(), hoy.getMonth()+i+1, 1);
+    var nom  = MESES_NOM[mes.getMonth()]+' '+mes.getFullYear().toString().slice(2);
+    var def  = defaults[i]||1.5;
+    var cell = document.createElement('div'); cell.className='inf-cell';
+    cell.innerHTML='<label>'+nom+'</label><input type="number" id="inf-'+i+'" value="'+def.toFixed(1)+'" min="0" max="100" step="0.1" oninput="recalcularCer()"><div class="inf-mes">% mensual</div>';
+    grid.appendChild(cell);
+  }
+}
+
+// ── ARRAY DE INFLACIÓN ───────────────────────────────────────────────
+function getInflacionParaDias(dias) {
+  var modo = document.getElementById('cer-modo').value;
+  var meses = Math.ceil(dias / 30);
+
+  if(modo === 'fija') {
+    var inf = (parseFloat(document.getElementById('cer-inf-fija').value)||3) / 100;
+    var arr = [];
+    for(var i=0; i<meses; i++) arr.push(inf);
+    return arr;
+  }
+
+  // variable
+  var totalMeses = parseInt(document.getElementById('cer-meses').value)||6;
+  var arr2 = [];
+  for(var j=0; j<meses; j++) {
+    var el = document.getElementById('inf-'+j);
+    arr2.push(el ? (parseFloat(el.value)||0)/100 : 0.025);
+  }
+  return arr2;
+}
+
+function getInflacionResumen() {
+  var modo = document.getElementById('cer-modo').value;
+  if(modo==='fija') {
+    var inf = (parseFloat(document.getElementById('cer-inf-fija').value)||3);
+    return {mensualProm: inf, meses: parseInt(document.getElementById('cer-meses').value)||6};
+  }
+  var meses = parseInt(document.getElementById('cer-meses').value)||6;
+  var tot = 1;
+  for(var i=0; i<meses; i++){
+    var el=document.getElementById('inf-'+i);
+    tot *= (1+(el?(parseFloat(el.value)||0)/100:0.025));
+  }
+  return {mensualProm: ((Math.pow(tot,1/meses)-1)*100), meses: meses, acum: ((tot-1)*100)};
+}
+
+// ── CAPITAL CER A VENCIMIENTO ────────────────────────────────────────
+// Capital CER = monto × ∏(1+inf_i) × (1+TIRreal/12)^meses - comisión
+function capCerVenc(inst, monto) {
+  var dias   = inst.dias;
+  var meses  = dias / 30;
+  var inflArr = getInflacionParaDias(dias);
+
+  // Inflación acumulada exacta al plazo del bono
+  var acumInf = 1;
+  for(var i=0; i<inflArr.length; i++) {
+    var frac = Math.min(1, meses - i);
+    if(frac <= 0) break;
+    acumInf *= Math.pow(1+inflArr[i], frac);
+  }
+
+  var tirReal = inst.tirReal / 100;
+  var temReal = Math.pow(1+tirReal, 1/12) - 1;
+  var bruto   = monto * acumInf * Math.pow(1+temReal, meses);
+
+  var arancel = document.getElementById('cer-cat').value==='preferente' ? 1.00 : 1.20;
+  var costo   = Math.max(monto*arancel/100*dias/365, 100) + Math.floor(monto/inst.precio*100)*0.0001;
+
+  // Solo inflación (lo que necesitarías para mantener poder adquisitivo)
+  var soloInf = monto * acumInf;
+
+  return { neto: bruto-costo, bruto, costo, soloInf, acumInf, gananciaReal: (bruto-costo) - soloInf };
+}
+
+// ── RECALCULAR CER ───────────────────────────────────────────────────
+function recalcularCer() {
+  var monto = parseFloat(document.getElementById('cer-monto').value)||1000000;
+
+  // Resumen inflación
+  var res = getInflacionResumen();
+  var acumRef = Math.pow(1+res.mensualProm/100, res.meses) - 1;
+  document.getElementById('cer-resumen-pill').innerHTML =
+    'Inflación mensual: <strong>'+res.mensualProm.toFixed(1)+'%</strong><br>'+
+    'Acumulada '+res.meses+' meses: <strong>'+(acumRef*100).toFixed(1)+'%</strong><br>'+
+    'Capital para mantener poder adquisitivo: <strong>'+fa(monto*(1+acumRef))+'</strong>';
+
+  // Tabla
+  var tbody = document.getElementById('cerMktBody'); tbody.innerHTML='';
+  INST_CER.forEach(function(inst){
+    var r = capCerVenc(inst, monto);
+    var gananciaReal = r.gananciaReal;
+    var gCls  = gananciaReal>=0 ? 'vup' : 'vdn';
+    var gLbl  = gananciaReal>=0 ? '✓ Cubre inflación' : '✗ No cubre';
+    var gPill = gananciaReal>=0 ? 'pu' : 'pd';
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="c cc"><input type="checkbox"'+(inst._sel?' checked':'')+' onchange="toggleCer(\''+inst.t+'\',this)"></td>'+
+      '<td><span class="mono">'+inst.t+'</span></td>'+
+      '<td class="mu-t">'+inst.venc+'</td>'+
+      '<td class="r" style="font-weight:600">'+inst.precio.toLocaleString('es-AR',{maximumFractionDigits:2})+'</td>'+
+      '<td class="r '+(inst.tirReal>=0?'vd-t':'rj-t')+'">'+(inst.tirReal>=0?'+':'')+inst.tirReal.toFixed(1)+'%</td>'+
+      '<td class="r mu-t">'+inst.dias+'</td>'+
+      '<td class="r"><strong>'+fa(r.neto)+'</strong></td>'+
+      '<td class="r mu-t">'+fa(r.soloInf)+'</td>'+
+      '<td class="r '+gCls+'">'+(gananciaReal>=0?'+':'')+fa(gananciaReal)+'</td>'+
+      '<td class="r"><span class="pill '+gPill+'">'+gLbl+'</span></td>';
+    tbody.appendChild(tr);
+  });
+
+  // Comparativa seleccionados
+  var selCer = INST_CER.filter(function(i){ return i._sel; });
+  var compWrap = document.getElementById('cer-comp-wrap');
+  compWrap.style.display = selCer.length ? '' : 'none';
+  if(!selCer.length) return;
+
+  var mg = document.getElementById('cer-metricas'); mg.innerHTML='';
+  selCer.forEach(function(inst,i){
+    var r = capCerVenc(inst, monto);
+    var cubre = r.gananciaReal >= 0;
+    var d = document.createElement('div'); d.className='mc'+(cubre?' best':'');
+    d.innerHTML=(cubre?'<span class="mct">&#9733; Cubre</span>':'')+
+      '<div class="mcl">'+inst.t+' ('+inst.dias+'d)</div>'+
+      '<div class="mcv">'+fa(r.neto)+'</div>'+
+      '<div class="mcs">Ganancia real: '+(r.gananciaReal>=0?'+':'')+fa(r.gananciaReal)+'</div>';
+    mg.appendChild(d);
+  });
+
+  // Gráfico — evolución mes a mes
+  var maxMeses = Math.min(Math.max.apply(null, selCer.map(function(i){ return Math.ceil(i.dias/30); })), 24);
+  var labels = ['Hoy'];
+  for(var m=1;m<=maxMeses;m++) labels.push('Mes '+m);
+
+  // Línea de inflación pura
+  var dsInf = {
+    label: 'Inflación pura',
+    data: labels.map(function(_,idx){
+      if(idx===0) return monto;
+      var arr = getInflacionParaDias(idx*30);
+      var acum=1; arr.forEach(function(v){ acum*=(1+v); });
+      return monto*acum;
+    }),
+    borderColor:'#e66565', borderWidth:2, borderDash:[4,3], tension:.4, fill:false, pointRadius:0
+  };
+
+  var datasets=[dsInf];
+  selCer.forEach(function(inst,i){
+    datasets.push({
+      label:inst.t,
+      data:labels.map(function(_,idx){
+        if(idx===0) return monto;
+        var diasSim=idx*30;
+        var arrSim=getInflacionParaDias(diasSim);
+        var mesesSim=diasSim/30;
+        var acumInfSim=1;
+        arrSim.forEach(function(v,j){
+          var frac=Math.min(1,mesesSim-j); if(frac<=0) return;
+          acumInfSim*=Math.pow(1+v,frac);
+        });
+        var tirReal=inst.tirReal/100;
+        var temReal=Math.pow(1+tirReal,1/12)-1;
+        var bruto=monto*acumInfSim*Math.pow(1+temReal,mesesSim);
+        var arancel=document.getElementById('cer-cat').value==='preferente'?1.00:1.20;
+        var costo=Math.max(monto*arancel/100*diasSim/365,100)+Math.floor(monto/inst.precio*100)*0.0001;
+        return bruto-costo;
+      }),
+      borderColor:CC[i]||'#93D500', borderWidth:2, tension:.4, fill:false, pointRadius:0
+    });
+  });
+
+  document.getElementById('cer-legWrap').innerHTML=datasets.map(function(d){
+    return '<div class="leg-i"><div class="leg-sq" style="background:'+d.borderColor+'"></div><span>'+d.label+'</span></div>';
+  }).join('');
+
+  if(cerChartInst){ cerChartInst.destroy(); cerChartInst=null; }
+  cerChartInst=new Chart(document.getElementById('cerChart').getContext('2d'),{
+    type:'line', data:{labels:labels, datasets:datasets},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1A3F47',borderColor:'rgba(147,213,0,.3)',
+        borderWidth:1,titleColor:'rgba(255,255,255,.55)',bodyColor:'#fff',padding:10,
+        callbacks:{label:function(c){ return ' '+c.dataset.label+': '+fa(c.raw); }}}},
+      scales:{
+        x:{grid:{color:'rgba(87,87,86,.08)'},ticks:{color:'#575756',font:{size:10},maxTicksLimit:12}},
+        y:{grid:{color:'rgba(87,87,86,.08)'},ticks:{color:'#575756',font:{size:10},
+          callback:function(v){ return '$'+(v/1000).toFixed(0)+'k'; }}}
+      }}
+  });
+}
+
+function toggleCer(t, cb){
+  var inst = INST_CER.find(function(i){ return i.t===t; });
+  if(inst) inst._sel = cb.checked;
+  recalcularCer();
+}
+
+document.addEventListener('change', function(e){
+  if(e.target && e.target.id==='cer-meses') { generarInputsInflacion(); recalcularCer(); }
+});
 // how to
 function toggleHow(){
   var body=document.getElementById('howBody');
