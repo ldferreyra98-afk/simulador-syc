@@ -184,7 +184,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
   <div class="tr2">
     <div class="ldot"></div>
     <span class="ltxt" id="statusTxt">Datos al 31/03/2026</span>
-    <span class="upd-badge">Bonistas 31/03/2026</span>
+    <span class="upd-badge" id="updBadge">Bonistas</span>
   </div>
 </div>
 
@@ -192,7 +192,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 
 <div class="ph">
   <div class="tw"><span class="thl">Simulador</span><span class="tmn">de inversiones<span class="tdot">.</span></span></div>
-  <div class="psub">Lecaps · Boncaps · Bote · Bonte · CAPs · PUT | Datos Bonistas.com 31/03/2026 | TIR/TEM/TNA idénticas a Bonistas</div>
+  <div class="psub">Lecaps · Boncaps · Bote · Bonte · CAPs · PUT | Datos Bonistas.com | TIR/TEM/TNA idénticas a Bonistas</div>
 </div>
 
 <!-- HOW TO -->
@@ -358,7 +358,7 @@ input[type=number]:focus,select:focus{border-color:var(--vd);}
 
 <!-- MERCADO -->
 <div class="sec">
-  <div class="sl"><span class="ar">&#8594;</span> Mercado — todos los instrumentos — Bonistas.com 31/03/2026</div>
+  <div class="sl"><span class="ar">&#8594;</span> Mercado — todos los instrumentos — <span id="mktFechaLbl">Bonistas.com</span></div>
   <div class="filter-row">
     <button class="fb" onclick="setF('todos',this)">Todos</button>
     <button class="fb active" onclick="setF('Lecap',this)">Lecap</button>
@@ -587,7 +587,7 @@ function fetchPreciosSheets() {
           vals.fuente === 'bonistas' ? live++ : ref++;
         }
       });
-      setApiBar('ok', 'Bonistas · ' + data.fecha + ' · ' + live + ' live');
+      setApiBar('ok', live + ' live · ' + ref + ' ref', data.fecha);
       renderMkt();
       recalcular();
       if(cerIniciado) recalcularCer();
@@ -597,7 +597,22 @@ function fetchPreciosSheets() {
     });
 }
 
-function setApiBar(estado, msg){
+function formatFecha(f) {
+  // Convierte ISO o cualquier formato a dd/MM/yyyy HH:mm
+  if(!f || f === 'sin fecha') return f;
+  var d = new Date(f);
+  if(!isNaN(d)) {
+    var dd = String(d.getDate()).padStart(2,'0');
+    var mm = String(d.getMonth()+1).padStart(2,'0');
+    var yyyy = d.getFullYear();
+    var hh = String(d.getHours()).padStart(2,'0');
+    var min = String(d.getMinutes()).padStart(2,'0');
+    return dd+'/'+mm+'/'+yyyy+' '+hh+':'+min;
+  }
+  return f;
+}
+
+function setApiBar(estado, msg, fechaRaw){
   var el = document.getElementById('apiBar');
   var ts = new Date().toLocaleTimeString('es-AR');
   if(estado === 'loading'){
@@ -605,13 +620,19 @@ function setApiBar(estado, msg){
     document.getElementById('statusTxt').textContent = 'Actualizando...';
     return;
   }
+  var fechaFmt = fechaRaw ? formatFecha(fechaRaw) : ts;
   var clr = estado==='ok' ? 'var(--vd)' : '#ffde59';
   var ico = estado==='ok' ? '&#10003;' : '&#9888;';
   el.innerHTML =
     '<span><strong>Fuente:</strong> Bonistas.com via Apps Script</span>' +
     '<span style="color:'+clr+';font-weight:600">'+ico+' '+msg+'</span>' +
-    '<span class="mu2">| '+ts+'</span>';
-  document.getElementById('statusTxt').textContent = ts;
+    '<span class="mu2">| Actualizado: '+fechaFmt+'</span>';
+  document.getElementById('statusTxt').textContent = fechaFmt;
+  // Actualizar badge y título de sección
+  var badge = document.getElementById('updBadge');
+  if(badge) badge.textContent = 'Bonistas '+fechaFmt;
+  var lbl = document.getElementById('mktFechaLbl');
+  if(lbl) lbl.textContent = 'Bonistas.com · '+fechaFmt;
 }
 
 // ── DATOS BONISTAS 31/03/2026 ────────────────────────────────────────
