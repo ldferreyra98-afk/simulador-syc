@@ -2662,8 +2662,10 @@ function HD_calc(){
 }
 
 
-// ══ ONs — precios y TIR en tiempo real vía Google Apps Script ══════
-// ⚠️  Reemplazá esta URL con la /exec de tu Apps Script luego del deploy
+// ══ PRECIOS EN TIEMPO REAL — mismo GAS que el simulador de renta fija ═
+// GAS 1: Bonistas → Lecaps/Boncaps/CER (mismo del simulador)
+const GAS_BONISTAS_URL = 'https://script.google.com/macros/s/AKfycbwX-MhXsDiMO_z55Ac1j1mQemPqxb9sbN0HfwPAmtSV3rr7VMeTjBGOT_1YsWqqmRGTtw/exec';
+// GAS 2: Drive Seguimientos → ONs Hard Dollar
 const GAS_ONS_URL = 'https://script.google.com/macros/s/AKfycbyuKHd8IEp6s9Dck4QgcTXFBEYALmx2ODp_gpJDh6aHfLtf7lOwrURUMotqmKX61gds/exec';
 
 let GS_lastUpdate = null;
@@ -2675,14 +2677,53 @@ function GS_setStatus(msg, color){
   if(el){ el.textContent = msg; el.style.color = color||'#aaa'; }
 }
 
+// ── Fetch Bonistas (Lecaps/Boncaps/CER) — formato data.titulos[ticker] ──
+function L_fetchPrecios(){
+  if(location.protocol === 'file:') return;
+  fetch(GAS_BONISTAS_URL)
+    .then(r => r.json())
+    .then(data => {
+      if(!data.ok || !data.titulos) throw new Error('Respuesta inválida');
+      let live = 0;
+      Object.keys(data.titulos).forEach(ticker => {
+        const vals = data.titulos[ticker];
+        // Lecaps/Boncaps/Bote/Bonte
+        const inst = L_INST.find(i => i.t === ticker);
+        if(inst && vals.precio){
+          inst.precio = vals.precio;
+          if(vals.varP  !== undefined) inst.varP = vals.varP;
+          if(vals.tem   !== undefined) inst.tem  = vals.tem;
+          if(vals.tna   !== undefined) inst.tna  = vals.tna;
+          if(vals.tir   !== undefined) inst.tir  = vals.tir;
+          if(vals.vt    !== undefined) inst.vt   = vals.vt;
+          if(vals.dias  !== undefined) inst.dias = vals.dias;
+          live++;
+        }
+        // CER
+        const instCer = CER_BONOS.find(i => i.t === ticker);
+        if(instCer && vals.precio){
+          instCer.precio = vals.precio;
+          if(vals.tir  !== undefined) instCer.tirReal = vals.tir;
+          if(vals.dias !== undefined) instCer.dias    = vals.dias;
+          live++;
+        }
+      });
+      const ts = new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+      // Actualizar badge de la hoja 1
+      const badge = document.getElementById('L_updBadge');
+      if(badge) badge.textContent = '✓ Bonistas · ' + ts;
+      L_actualizarDiasDesdeHoy();
+      L_renderMkt();
+      L_recalcular();
+      CER_calcular();
+    })
+    .catch(e => console.warn('Bonistas fetch error:', e.message));
+}
+
+// ── Fetch ONs Hard Dollar — formato data.data[{ticker,precio,tir}] ──
 async function ON_loadGSheets(){
-  // En local (file://) el fetch está bloqueado por el navegador
   if(location.protocol === 'file:'){
-    GS_setStatus('📁 Local · precios base (subí a GitHub para precios en vivo)', '#aaa');
-    return;
-  }
-  if(!GAS_ONS_URL || GAS_ONS_URL.includes('REEMPLAZAR')){
-    GS_setStatus('⚠ URL del script no configurada', '#e08020');
+    GS_setStatus('📁 Local · precios base cargados', '#aaa');
     return;
   }
   GS_setStatus('⟳ Cargando precios…', '#f0b429');
@@ -2699,7 +2740,6 @@ async function ON_loadGSheets(){
       if(!on) return;
       if(row.precio > 0.01){ on.precio = row.precio; updated++; }
       if(row.tir != null && row.tir > 0){
-        // El GAS devuelve TIR como porcentaje (7.41) → convertir a decimal
         on.tir = row.tir > 1 ? row.tir / 100 : row.tir;
       }
     });
@@ -2722,6 +2762,23 @@ async function ON_loadGSheets(){
   }
 }
 
+// Actualiza días restantes de Lecaps/CER desde hoy
+function L_actualizarDiasDesdeHoy(){
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  L_INST.forEach(inst => {
+    const p = inst.venc.split('-');
+    const v = new Date(+p[0],+p[1]-1,+p[2]);
+    inst.dias = Math.max(0, Math.round((v-hoy)/86400000));
+  });
+  if(typeof CER_BONOS !== 'undefined'){
+    CER_BONOS.forEach(b => {
+      const p = b.venc.split('-');
+      const v = new Date(+p[0],+p[1]-1,+p[2]);
+      b.dias = Math.max(0, Math.round((v-hoy)/86400000));
+    });
+  }
+}
+
 function init(){
   L_onHorizonte();
   ON_render();
@@ -2731,10 +2788,16 @@ function init(){
   FCI_calc();
   CER_buildSliders();
   HD_calc();
-  // Cargar precios y TIR de Google Sheets
+  // Cargar precios Bonistas (Lecaps/CER) y ONs Hard Dollar
+  L_actualizarDiasDesdeHoy();
+  L_fetchPrecios();
   ON_loadGSheets();
-  // Refrescar cada 3 minutos
-  setInterval(ON_loadGSheets, 3 * 60 * 1000);
+  // Refrescar cada 5 minutos
+  setInterval(() => {
+    L_actualizarDiasDesdeHoy();
+    L_fetchPrecios();
+    ON_loadGSheets();
+  }, 5 * 60 * 1000);
 }
 init();
 </script>
