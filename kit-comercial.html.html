@@ -2667,6 +2667,8 @@ function HD_calc(){
 const GAS_BONISTAS_URL = 'https://script.google.com/macros/s/AKfycbwX-MhXsDiMO_z55Ac1j1mQemPqxb9sbN0HfwPAmtSV3rr7VMeTjBGOT_1YsWqqmRGTtw/exec';
 // GAS 2: Drive Seguimientos → ONs Hard Dollar
 const GAS_ONS_URL = 'https://script.google.com/macros/s/AKfycbyuKHd8IEp6s9Dck4QgcTXFBEYALmx2ODp_gpJDh6aHfLtf7lOwrURUMotqmKX61gds/exec';
+// TIR del Drive viene como decimal (0.0744) — NO dividir por 100
+const GAS_ONS_TIR_ES_DECIMAL = true;
 
 let GS_lastUpdate = null;
 let GS_retries    = 0;
@@ -2740,7 +2742,8 @@ async function ON_loadGSheets(){
       if(!on) return;
       if(row.precio > 0.01){ on.precio = row.precio; updated++; }
       if(row.tir != null && row.tir > 0){
-        on.tir = row.tir > 1 ? row.tir / 100 : row.tir;
+        // TIR viene como decimal desde el Drive (ej: 0.0744)
+        on.tir = row.tir;
       }
     });
 
