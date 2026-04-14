@@ -458,7 +458,7 @@ select:focus{outline:none;border-color:var(--gn);}
       <div class="how-steps">
         <div class="how-step"><div class="how-num">1</div><div class="how-text"><strong>Ingresá tu monto</strong> — el capital que querés invertir en pesos.</div></div>
         <div class="how-step"><div class="how-num">2</div><div class="how-text"><strong>Elegí el horizonte</strong> — los plazos especiales corresponden al vencimiento exacto de un título.</div></div>
-        <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>Seleccioná tu banco</strong> — se carga la TNA vigente del Plazo Fijo (BCRA Mar 2026).</div></div>
+        <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>Seleccioná tu banco</strong> — se carga la TNA vigente del Plazo Fijo (BCRA 14 Abr 2026).</div></div>
         <div class="how-step"><div class="how-num">4</div><div class="how-text"><strong>Elegí la categoría del cliente</strong> — Estándar (1.20%) o Preferente (1.00%). Las comisiones se descuentan del capital final.</div></div>
         <div class="how-step"><div class="how-num">5</div><div class="how-text"><strong>Revisá la comparativa automática</strong> — muestra instrumentos con vencimiento ±10 días de tu horizonte vs el PF.</div></div>
         <div class="how-step"><div class="how-num">6</div><div class="how-text"><strong>Seleccioná tickers manualmente</strong> — con los checkboxes en la tabla de mercado podés comparar cualquier instrumento.</div></div>
@@ -471,7 +471,7 @@ select:focus{outline:none;border-color:var(--gn);}
         <div class="how-g-row"><span class="how-g-key">VT</span><span class="how-g-val">Valor Técnico — precio de rescate al vencimiento por cada $100 VN.</span></div>
         <div class="how-g-row"><span class="how-g-key">MD</span><span class="how-g-val">Modified Duration — sensibilidad del precio a cambios en tasas.</span></div>
       </div>
-      <div class="how-footer">Datos: <strong>Bonistas.com 31/03/2026</strong> | Tasas bancarias: <strong>BCRA Mar 2026</strong></div>
+      <div class="how-footer">Datos: <strong>Bonistas.com 31/03/2026</strong> | Tasas bancarias: <strong>BCRA 14 Abr 2026</strong></div>
     </div>
   </div>
 </div>
@@ -534,42 +534,12 @@ select:focus{outline:none;border-color:var(--gn);}
       <div class="fg"><label>¿En qué banco sos cliente?</label>
         <div class="bsw"><select id="L_bancoSel" onchange="L_onBanco()">
           <option value="">— Seleccioná tu banco —</option>
-          <optgroup label="Grandes bancos">
-            <option value="nacion">Banco Nación Argentina — 22%</option>
-            <option value="provincia">Banco Provincia de Bs. As. — 23%</option>
-            <option value="macro">Banco Macro — 24%</option>
-            <option value="credicoop">Banco Credicoop — 21%</option>
-            <option value="galicia">Banco Galicia — 21%</option>
-            <option value="bbva">Banco BBVA Argentina — 21%</option>
-            <option value="santander">Banco Santander — 20%</option>
-            <option value="icbc">Banco ICBC — 22.5%</option>
-            <option value="ciudad">Banco Ciudad de Bs. As. — 20%</option>
-            <option value="hsbc">Banco HSBC — 20%</option>
-          </optgroup>
-          <optgroup label="Financieras digitales">
-            <option value="meridian">Banco Meridian — 28.5%</option>
-            <option value="voii">Banco Voii — 28%</option>
-            <option value="cmf">Banco CMF — 27.5%</option>
-            <option value="bica">Banco Bica — 27%</option>
-            <option value="sol">Banco del Sol — 25.5%</option>
-            <option value="bibank">Bibank — 24%</option>
-            <option value="julio">Banco Julio — 23.5%</option>
-          </optgroup>
-          <optgroup label="Bancos medianos">
-            <option value="hipotecario">Banco Hipotecario — 23%</option>
-            <option value="cordoba">Banco de Córdoba — 25.5%</option>
-            <option value="chubut">Banco del Chubut — 24%</option>
-            <option value="supervielle">Banco Supervielle — 20%</option>
-            <option value="patagonia">Banco Patagonia — 20%</option>
-            <option value="comafi">Banco Comafi — 21%</option>
-            <option value="comercio">Banco de Comercio — 25%</option>
-            <option value="mariva">Banco Mariva — 25%</option>
-          </optgroup>
+          <!-- Opciones generadas dinámicamente desde BTNA -->
           <optgroup label="Otro"><option value="otro">Otro / tasa manual</option></optgroup>
         </select></div>
-        <div class="btp" id="L_bancoPill"><div><div class="btp-n" id="L_pillN"></div><div class="btp-sub">TNA PF · Clientes BCRA Mar 2026</div></div><div class="btp-tna" id="L_pillT"></div></div>
+        <div class="btp" id="L_bancoPill"><div><div class="btp-n" id="L_pillN"></div><div class="btp-sub">TNA PF · Clientes BCRA 14 Abr 2026</div></div><div class="btp-tna" id="L_pillT"></div></div>
       </div>
-      <div class="fg" id="L_tnaWrap"><label>TNA del PF (%)</label><div class="rel"><input type="number" id="L_tna_m" value="22" min="0" max="500" step="0.5" class="sf" oninput="L_recalcular()"><span class="sfx">%</span></div></div>
+      <div class="fg" id="L_tnaWrap"><label>TNA del PF (%)</label><div class="rel"><input type="number" id="L_tna_m" value="16" min="0" max="500" step="0.5" class="sf" oninput="L_recalcular()"><span class="sfx">%</span></div></div>
       <div class="fg"><label>Renovación</label><select id="L_renov" onchange="L_recalcular()"><option value="automatica">Automática (capitaliza)</option><option value="manual">Manual</option></select></div>
     </div>
   </div>
@@ -1878,8 +1848,48 @@ function setKitTab(idx,btn){
 // ══ HOJA 1 — LECAPS ═════════════════════════════════════════════════════
 const fa=v=>'$'+Math.round(v).toLocaleString('es-AR');
 const fp=(v,d=2)=>v.toFixed(d)+'%';
-const BTNA={nacion:22,provincia:23,macro:24,credicoop:21,galicia:21,bbva:21,santander:20,icbc:22.5,ciudad:20,hsbc:20,meridian:28.5,voii:28,cmf:27.5,bica:27,sol:25.5,bibank:24,julio:23.5,hipotecario:23,cordoba:25.5,chubut:24,supervielle:20,patagonia:20,comafi:21,comercio:25,mariva:25};
-const BN={nacion:'Banco Nación',provincia:'Banco Provincia',macro:'Banco Macro',credicoop:'Banco Credicoop',galicia:'Banco Galicia',bbva:'Banco BBVA',santander:'Banco Santander',icbc:'Banco ICBC',ciudad:'Banco Ciudad',hsbc:'Banco HSBC',meridian:'Banco Meridian',voii:'Banco Voii',cmf:'Banco CMF',bica:'Banco Bica',sol:'Banco del Sol',bibank:'Bibank',julio:'Banco Julio',hipotecario:'Banco Hipotecario',cordoba:'Banco de Córdoba',chubut:'Banco del Chubut',supervielle:'Banco Supervielle',patagonia:'Banco Patagonia',comafi:'Banco Comafi',comercio:'Banco de Comercio',mariva:'Banco Mariva'};
+// ╔══════════════════════════════════════════════════════════════════════╗
+// ║  TASAS PLAZO FIJO — EDITAR ACÁ CUANDO CAMBIAN LAS TASAS             ║
+// ║  Fuente: bcra.gob.ar/plazos-fijos-online  |  Última actualización: 14 Abr 2026 ║
+// ║  Solo modificar el número después de los dos puntos (:)             ║
+// ╚══════════════════════════════════════════════════════════════════════╝
+const BTNA = {
+  // ── Grandes bancos (mayor volumen de depósitos) ──────────────────────
+  nacion:      19,      // Banco Nación
+  provincia:   21.5,    // Banco Provincia
+  macro:       21.5,    // Banco Macro
+  credicoop:   19.5,    // Banco Credicoop
+  galicia:     18.25,   // Banco Galicia
+  bbva:        20.5,    // Banco BBVA
+  santander:   16.5,    // Banco Santander
+  icbc:        19.75,   // Banco ICBC
+  ciudad:      19,      // Banco Ciudad
+  hsbc:        20,      // Banco HSBC (sin dato, se mantiene)
+  // ── Bancos regionales / digitales ───────────────────────────────────
+  meridian:    25.5,    // Banco Meridian
+  voii:        25.5,    // Banco Voii
+  cmf:         24,      // Banco CMF
+  bica:        25,      // Banco Bica
+  sol:         24,      // Banco del Sol
+  cordoba:     22.75,   // Banco de Córdoba
+  comercio:    23,      // Banco de Comercio
+  mariva:      22,      // Banco Mariva
+  bibank:      24,      // Bibank
+  chubut:      22,      // Banco del Chubut
+  julio:       21,      // Banco Julio
+  hipotecario: 21,      // Banco Hipotecario
+  supervielle: 20,      // Banco Supervielle (sin dato, se mantiene)
+  patagonia:   20,      // Banco Patagonia (sin dato, se mantiene)
+  comafi:      19,      // Banco Comafi
+  credregional:25.5,    // Crédito Regional
+  reba:        25,      // REBA Compañía Financiera
+  masventas:   24,      // Banco MasVentas
+  dino:        22.5,    // Banco Dino
+  corrientes:  19.5,    // Banco de Corrientes
+  formosa:     21,      // Banco de Formosa
+  tierradelfuego: 23,   // Banco Provincia Tierra del Fuego
+};
+const BN={nacion:'Banco Nación',provincia:'Banco Provincia',macro:'Banco Macro',credicoop:'Banco Credicoop',galicia:'Banco Galicia',bbva:'Banco BBVA',santander:'Banco Santander',icbc:'Banco ICBC',ciudad:'Banco Ciudad',hsbc:'Banco HSBC',meridian:'Banco Meridian',voii:'Banco Voii',cmf:'Banco CMF',bica:'Banco Bica',sol:'Banco del Sol',bibank:'Bibank',julio:'Banco Julio',hipotecario:'Banco Hipotecario',cordoba:'Banco de Córdoba',chubut:'Banco del Chubut',supervielle:'Banco Supervielle',patagonia:'Banco Patagonia',comafi:'Banco Comafi',comercio:'Banco de Comercio',mariva:'Banco Mariva',credregional:'Crédito Regional',reba:'REBA Cía. Financiera',masventas:'Banco MasVentas',dino:'Banco Dino',corrientes:'Banco de Corrientes',formosa:'Banco de Formosa',tierradelfuego:'Bco. Prov. Tierra del Fuego'};
 const ARANCEL={estandar:1.20,preferente:1.00};
 function L_getArancel(){const cat=document.getElementById('L_catCliente').value;if(cat==='personalizada')return parseFloat(document.getElementById('L_comisionCustom').value)||0;return ARANCEL[cat];}
 function L_costoTotal(monto,dias,precio){const arancel=L_getArancel(),precioOk=(precio&&precio>0)?precio:100;const nominales=Math.floor(monto/precioOk*100);return Math.max((monto*arancel/100)*dias/365,100)+nominales*0.0001;}
@@ -1914,6 +1924,41 @@ function L_capFinalTitulo(inst,monto,horizDias){
   if(inst.tipo==='CAP'||inst.tipo==='PUT')return{neto:0,bruto:0,costo:0};
   const tem=inst.tem/100,diasEf=Math.min(horizDias,inst.dias),mesesEf=diasEf/30;const bruto=monto*Math.pow(1+tem,mesesEf),costo=L_costoTotal(monto,diasEf,inst.precio);return{neto:bruto-costo,bruto,costo};}
 function L_capPF(monto,horiz,tna,renov){if(renov==='automatica'){const p=Math.floor(horiz/30),r=horiz%30;let c=monto;for(let i=0;i<p;i++)c*=(1+tna*30/365);if(r>0)c*=(1+tna*r/365);return c;}return monto*(1+tna*horiz/365);}
+// Grupos para el selector de bancos
+const BGRUPOS = {
+  'Grandes bancos':          ['nacion','provincia','macro','credicoop','galicia','bbva','santander','icbc','ciudad','hsbc'],
+  'Financieras / digitales': ['meridian','voii','credregional','cmf','bica','sol','bibank','reba','masventas'],
+  'Bancos medianos':         ['cordoba','comercio','chubut','dino','tierradelfuego','hipotecario','julio','mariva','corrientes','formosa','supervielle','patagonia','comafi']
+};
+
+// Poblar el <select> dinámicamente desde BTNA para que nombre y tasa siempre coincidan
+function L_poblarBancos(){
+  const sel=document.getElementById('L_bancoSel');
+  // Limpiar opciones anteriores (excepto placeholder y "Otro")
+  while(sel.options.length>1) sel.remove(1);
+  // Reinsertar "Otro" al final
+  const optOtro=document.createElement('optgroup');
+  optOtro.label='Otro';
+  const oOtro=document.createElement('option');
+  oOtro.value='otro'; oOtro.textContent='Otro / tasa manual';
+  optOtro.appendChild(oOtro);
+
+  Object.entries(BGRUPOS).forEach(([grupo,claves])=>{
+    const grp=document.createElement('optgroup');
+    grp.label=grupo;
+    claves.forEach(k=>{
+      if(!BTNA[k]||!BN[k]) return;
+      const o=document.createElement('option');
+      o.value=k;
+      const tnaStr=BTNA[k]%1===0 ? BTNA[k]+'%' : BTNA[k].toFixed(2).replace(/\.?0+$/,'')+'%';
+      o.textContent=BN[k]+' — '+tnaStr+' TNA';
+      grp.appendChild(o);
+    });
+    sel.appendChild(grp);
+  });
+  sel.appendChild(optOtro);
+}
+
 function L_onBanco(){const sel=document.getElementById('L_bancoSel').value,pill=document.getElementById('L_bancoPill'),tw=document.getElementById('L_tnaWrap');if(sel&&sel!=='otro'&&BTNA[sel]){document.getElementById('L_pillN').textContent=BN[sel];document.getElementById('L_pillT').textContent=BTNA[sel]+'% TNA';pill.classList.add('show');tw.style.display='none';}else{pill.classList.remove('show');tw.style.display='';}L_recalcular();}
 function L_getTNA(){const sel=document.getElementById('L_bancoSel').value;if(sel&&sel!=='otro'&&BTNA[sel])return BTNA[sel]/100;return(parseFloat(document.getElementById('L_tna_m').value)||28)/100;}
 function L_getPFLabel(){const sel=document.getElementById('L_bancoSel').value;if(sel&&sel!=='otro'&&BN[sel])return'PF '+BN[sel];return'Plazo Fijo';}
@@ -2783,6 +2828,7 @@ function L_actualizarDiasDesdeHoy(){
 }
 
 function init(){
+  L_poblarBancos();
   L_onHorizonte();
   ON_render();
   ON_simCalc();
